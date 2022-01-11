@@ -22,7 +22,7 @@ void make_request(const char *request, char *response) {
 
   data_socket = socket(AF_UNIX, SOCK_STREAM, 0);
   if (data_socket == -1) {
-    perror("make_request: Socket create error\n");
+    fprintf(stderr, "make_request: Socket create error: %s\n", strerror(errno));
     exit(EXIT_FAILURE);
   }
 
@@ -33,19 +33,19 @@ void make_request(const char *request, char *response) {
 
   ret = connect(data_socket, (const struct sockaddr *) &addr, sizeof(addr));
   if (ret == -1) {
-    fprintf(stderr, "make_request: Socket connect error\n");
+    fprintf(stderr, "make_request: Socket connect error: %s\n", strerror(errno));
     exit(EXIT_FAILURE);
   }
 
   ret = write(data_socket, request, ARRAY_SIZE(request));
 
   if (ret == -1) {
-    perror("make_request: Write error to socket\n");
+    fprintf(stderr, "make_request: Write error to socket: %s\n", strerror(errno));
   }
 
   ret = read(data_socket, response, sizeof(response));
   if (ret == -1) {
-    perror("make_request: Read error from socket\n");
+    fprintf(stderr, "make_request: Read error from socket: %s\n", strerror(errno));
     exit(EXIT_FAILURE);
   }
 
