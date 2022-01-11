@@ -1,0 +1,11 @@
+.debhelper
+debhelper-build-stamp
+files
+pbotectl.debhelper.log
+pbotectl-dbg.substvars
+pbotectl.postinst.debhelper
+pbotectl.postrm.debhelper
+pbotectl.prerm.debhelper
+pbotectl.substvars
+pbotectl/
+pbotectl-dbg/
