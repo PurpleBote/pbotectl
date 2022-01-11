@@ -18,7 +18,7 @@ Package: pbotectl
 Architecture: any
 Pre-Depends:
  ${misc:Pre-Depends},
- adduser
+ adduser,
  pboted
 Depends:
  ${shlibs:Depends},
