@@ -18,12 +18,24 @@
  * along with pbotectl. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef GIT_COMPAT_UTIL_H
-#define GIT_COMPAT_UTIL_H
+#ifndef PBOTECTL_UTIL_H
+#define PBOTECTL_UTIL_H
+
+#include <sys/stat.h>
 
 #define ARRAY_SIZE(x) (sizeof (x) / sizeof (x[0]))
 
 #define EXIT_SUCCESS 0
+
+#define PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT "PBOTECTL_USE_JSON_OUTPUT"
+#define PBOTECTL_SOCKET_PATH_ENVIRONMENT "PBOTECTL_SOCKET_PATH"
+
+/*const char * const env_var[]
+= {
+   PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT,
+   PBOTECTL_SOCKET_PATH_ENVIRONMENT,
+   NULL
+   };*/
 
 //#define RUN_SETUP      (1<<0)
 //#define NEED_WORK_TREE (1<<3)
@@ -41,6 +53,13 @@ skip_prefix (const char *str, const char *prefix, const char **out)
     }
   while (*str++ == *prefix++);
   return 0;
+}
+
+static inline int
+file_exists (const char *filename)
+{
+    struct stat buffer;
+    return stat (filename, &buffer) == 0 ? 1 : 0;
 }
 
 #endif

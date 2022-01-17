@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project("pbotectl" LANGUAGES C)
+project("pbotectl")
 
 #set(CMAKE_VERBOSE_MAKEFILE on) # for debugging
 
@@ -20,26 +20,12 @@ set(PBOTECTL_SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 include_directories(${PBOTECTL_SRC_DIR})
 FILE(GLOB PBOTECTL_SRC ${PBOTECTL_SRC_DIR}/*.c)
 
-# read version
-
-file(READ "${PBOTECTL_SRC_DIR}/version.h" ver)
-
-string(REGEX MATCH "PBOTECTL_VERSION_MAJOR ([0-9]*)" _ ${ver})
-set(ver_major ${CMAKE_MATCH_1})
-
-string(REGEX MATCH "PBOTECTL_VERSION_MINOR ([0-9]*)" _ ${ver})
-set(ver_minor ${CMAKE_MATCH_1})
-
-string(REGEX MATCH "PBOTECTL_VERSION_MICRO ([0-9]*)" _ ${ver})
-set(ver_micro ${CMAKE_MATCH_1})
-
-set(CMAKE_PROJECT_VERSION "${ver_major}.${ver_minor}.${ver_micro}")
-
-include_directories(SYSTEM)
+include(Version)
+set_version("${PBOTECTL_SRC_DIR}/version.h" PROJECT_VERSION)
 
 # show summary
-message(STATUS "Project              ${PROJECT_NAME}")
-message(STATUS "Version              ${CMAKE_PROJECT_VERSION}")
+message(STATUS "Project            : ${PROJECT_NAME}")
+message(STATUS "Version            : ${PROJECT_VERSION}")
 message(STATUS "----------------------------------------")
 message(STATUS "Build type         : ${CMAKE_BUILD_TYPE}")
 message(STATUS "Compiler vendor    : ${CMAKE_C_COMPILER_ID}")
@@ -50,5 +36,3 @@ message(STATUS "Install prefix     : ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "----------------------------------------")
 
 add_executable("${PROJECT_NAME}" ${PBOTECTL_SRC})
-
-target_link_libraries("${PROJECT_NAME}")

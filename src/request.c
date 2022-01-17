@@ -19,6 +19,7 @@
  */
 
 #include <errno.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,47 +33,76 @@
 #define DEFAULT_SOCKET_PATH "/run/pboted/pboted.sock"
 
 void
+set_socket_path (char *socket_path)
+{
+  //strcpy (socket_path, getenv (PBOTECTL_SOCKET_PATH_ENVIRONMENT));
+  char *env_val = getenv (PBOTECTL_SOCKET_PATH_ENVIRONMENT);
+  if (env_val)
+    {
+      printf ("Got socket path override: %s\n", env_val);
+      strcpy (socket_path, env_val);
+    }
+  else
+    {
+      printf ("Use default socket path: %s\n", DEFAULT_SOCKET_PATH);
+      strcpy (socket_path, DEFAULT_SOCKET_PATH);
+    }
+}
+
+void
 make_request (const char *request, char *response)
 {
+  char socket_path[PATH_MAX];
   struct sockaddr_un addr;
   int ret;
   int data_socket;
 
+  set_socket_path (socket_path);
+
+  printf ("Socket path: %s\n", socket_path);
+
+  if (!file_exists (socket_path))
+    {
+      printf ("make_request: Socket file not exists: %s\n",
+              socket_path);
+      return;
+    }
+
   data_socket = socket (AF_UNIX, SOCK_STREAM, 0);
   if (data_socket == -1)
     {
-      fprintf (stderr, "make_request: Socket create error: %s\n",
-               strerror (errno));
-      exit (EXIT_FAILURE);
+      printf ("make_request: Socket create error: %s\n",
+              strerror (errno));
+      return;
     }
 
   memset (&addr, 0, sizeof (addr));
 
   addr.sun_family = AF_UNIX;
-  strncpy (addr.sun_path, DEFAULT_SOCKET_PATH, sizeof (addr.sun_path) - 1);
+  strncpy (addr.sun_path, socket_path, sizeof (addr.sun_path) - 1);
 
   ret = connect (data_socket, (const struct sockaddr *)&addr, sizeof (addr));
   if (ret == -1)
     {
-      fprintf (stderr, "make_request: Socket connect error: %s\n",
-               strerror (errno));
-      exit (EXIT_FAILURE);
+      printf ("make_request: Socket connect error: %s\n",
+              strerror (errno));
+      return;
     }
 
   ret = write (data_socket, request, ARRAY_SIZE (request));
 
   if (ret == -1)
     {
-      fprintf (stderr, "make_request: Write error to socket: %s\n",
-               strerror (errno));
+      printf ("make_request: Write error to socket: %s\n",
+              strerror (errno));
     }
 
   ret = read (data_socket, response, sizeof (response));
   if (ret == -1)
     {
-      fprintf (stderr, "make_request: Read error from socket: %s\n",
-               strerror (errno));
-      exit (EXIT_FAILURE);
+      printf ("make_request: Read error from socket: %s\n",
+              strerror (errno));
+      return;
     }
 
   response[sizeof (response) - 1] = 0;
