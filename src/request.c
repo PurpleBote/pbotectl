@@ -39,12 +39,12 @@ set_socket_path (char *socket_path)
   char *env_val = getenv (PBOTECTL_SOCKET_PATH_ENVIRONMENT);
   if (env_val)
     {
-      printf ("Got socket path override: %s\n", env_val);
+      //printf ("Got socket path override: %s\n", env_val);
       strcpy (socket_path, env_val);
     }
   else
     {
-      printf ("Use default socket path: %s\n", DEFAULT_SOCKET_PATH);
+      //printf ("Use default socket path: %s\n", DEFAULT_SOCKET_PATH);
       strcpy (socket_path, DEFAULT_SOCKET_PATH);
     }
 }
@@ -59,7 +59,7 @@ make_request (const char *request, char *buffer)
 
   set_socket_path (socket_path);
 
-  printf ("Socket path: %s\n", socket_path);
+  //printf ("Socket path: %s\n", socket_path);
 
   if (!file_exists (socket_path))
     {
@@ -89,7 +89,7 @@ make_request (const char *request, char *buffer)
       return;
     }
 
-  ret = write (data_socket, request, ARRAY_SIZE (request));
+  ret = write (data_socket, request, strlen (request));
 
   if (ret == -1)
     {
@@ -97,7 +97,7 @@ make_request (const char *request, char *buffer)
               strerror (errno));
     }
 
-  ret = read (data_socket, buffer, ARRAY_SIZE (buffer));
+  ret = read (data_socket, buffer, DEFAULT_BUFFER_SIZE);
   if (ret == -1)
     {
       printf ("make_request: Read error from socket: %s\n",
@@ -105,8 +105,8 @@ make_request (const char *request, char *buffer)
       return;
     }
 
-  buffer[ARRAY_SIZE (buffer) - 1] = 0;
-  printf ("make_request: response: %s\n", buffer);
+  buffer[DEFAULT_BUFFER_SIZE - 1] = 0;
+  //printf ("make_request: response: %s\n", buffer);
 
   close (data_socket);
 }

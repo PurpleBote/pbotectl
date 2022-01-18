@@ -31,8 +31,8 @@
 #define MAKE_VERSION(a, b, c) STRINGIZE (a) "." STRINGIZE (b) "." STRINGIZE (c)
 
 #define PBOTECTL_VERSION_MAJOR 0
-#define PBOTECTL_VERSION_MINOR 0
-#define PBOTECTL_VERSION_MICRO 1
+#define PBOTECTL_VERSION_MINOR 1
+#define PBOTECTL_VERSION_MICRO 0
 
 #define PBOTECTL_VERSION                                                      \
   MAKE_VERSION (PBOTECTL_VERSION_MAJOR, PBOTECTL_VERSION_MINOR,               \
