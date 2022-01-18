@@ -1,5 +1,11 @@
+pbotectl (0.1.0-1) unstable; urgency=low
+
+  * updated to version 0.1.0
+
+ -- polistern <polistern@i2pmail.org>  Mon, 17 Jan 2022 16:00:00 +0000
+
 pbotectl (0.0.1-1) unstable; urgency=low
 
   * initial package release on version 0.0.1
 
- -- polistern <polistern@i2pmail.org>  Fri, 11 Jan 2022 16:00:00 +0000
+ -- polistern <polistern@i2pmail.org>  Tue, 11 Jan 2022 16:00:00 +0000
