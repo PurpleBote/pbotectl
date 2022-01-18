@@ -1,5 +1,5 @@
 /*
- * request.c: code to make request ro socket
+ * request.c: code to make request to socket
  * Copyright (C) 2019-2022 polistern
  * 
  * This file is part of pbotectl.

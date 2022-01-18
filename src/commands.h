@@ -1,5 +1,5 @@
 /*
- * commands.h: list of interfaces of available commands
+ * commands.h: interfaces of available commands
  * Copyright (C) 2019-2022 polistern
  * 
  * This file is part of pbotectl.
@@ -18,16 +18,29 @@
  * along with pbotectl. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef COMMANDS_H
-#define COMMANDS_H
+#ifndef PBOTECTL_COMMANDS_H
+#define PBOTECTL_COMMANDS_H
 
 #define DEFAULT_BUFFER_SIZE 8192
 
 void make_request (const char *request, char *response);
 
 int cmd_help (int argc, const char **argv, const char *prefix);
-int cmd_show (int argc, const char **argv, const char *prefix);
-int cmd_storage (int argc, const char **argv, const char *prefix);
 // cmd_version defined in version.h
 
-#endif
+int cmd_show (int argc, const char **argv, const char *prefix);
+//int cmd_status (int argc, const char **argv, const char *prefix);
+
+/// mail command
+//int cmd_mail (int argc, const char **argv, const char *prefix);
+//int cmd_task (int argc, const char **argv, const char *prefix);
+//int cmd_alias (int argc, const char **argv, const char *prefix);
+
+/// bote commands
+int cmd_daemon (int argc, const char **argv, const char *prefix);
+int cmd_identity (int argc, const char **argv, const char *prefix);
+int cmd_storage (int argc, const char **argv, const char *prefix);
+int cmd_peer (int argc, const char **argv, const char *prefix);
+int cmd_node (int argc, const char **argv, const char *prefix);
+
+#endif // PBOTECTL_COMMANDS_H

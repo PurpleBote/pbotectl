@@ -30,9 +30,17 @@ You can fetch precompiled packages and binaries on [release](https://github.com/
 
 ## Building
 
+
+
 ## Usage
 
+
+
 ## Donations
+
+- **BTC**: 
+- **GOST**: 
+- **XMR**: 89xqER2GpS3Bqm8z8AuqKx5Cpf9BR1codN1VdufcAEbFP2t9oWPvKpzfr6s6dNDRFHVfRijiCQA3uCFYQLzfsWtM3ahbSqp
 
 ## License
 

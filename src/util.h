@@ -30,13 +30,6 @@
 #define PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT "PBOTECTL_USE_JSON_OUTPUT"
 #define PBOTECTL_SOCKET_PATH_ENVIRONMENT "PBOTECTL_SOCKET_PATH"
 
-/*const char * const env_var[]
-= {
-   PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT,
-   PBOTECTL_SOCKET_PATH_ENVIRONMENT,
-   NULL
-   };*/
-
 //#define RUN_SETUP      (1<<0)
 //#define NEED_WORK_TREE (1<<3)
 
@@ -62,4 +55,4 @@ file_exists (const char *filename)
     return stat (filename, &buffer) == 0 ? 1 : 0;
 }
 
-#endif
+#endif // PBOTECTL_UTIL_H
