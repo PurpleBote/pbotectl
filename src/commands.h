@@ -39,8 +39,8 @@ int cmd_show (int argc, const char **argv, const char *prefix);
 /// bote commands
 int cmd_daemon (int argc, const char **argv, const char *prefix);
 int cmd_identity (int argc, const char **argv, const char *prefix);
-int cmd_storage (int argc, const char **argv, const char *prefix);
-int cmd_peer (int argc, const char **argv, const char *prefix);
 int cmd_node (int argc, const char **argv, const char *prefix);
+int cmd_peer (int argc, const char **argv, const char *prefix);
+int cmd_storage (int argc, const char **argv, const char *prefix);
 
 #endif // PBOTECTL_COMMANDS_H

@@ -34,9 +34,16 @@ struct cmd_struct
 
 static struct cmd_struct commands[] = {
   { "help", cmd_help },
-  { "show", cmd_show },
-  { "storage", cmd_storage },
   { "version", cmd_version },
+  //
+  { "show", cmd_show },
+  //{ "status", cmd_show },
+  //
+  { "daemon", cmd_daemon },
+  { "identity", cmd_identity },
+  { "node", cmd_node },
+  { "peer", cmd_peer },
+  { "storage", cmd_storage },
 };
 
 const char * const env_var[]
