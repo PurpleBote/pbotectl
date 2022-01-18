@@ -23,7 +23,7 @@
 
 #define DEFAULT_BUFFER_SIZE 8192
 
-void make_request (const char *request, char *response);
+void make_request (const char *request, char *buffer);
 
 int cmd_help (int argc, const char **argv, const char *prefix);
 // cmd_version defined in version.h

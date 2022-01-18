@@ -50,7 +50,7 @@ set_socket_path (char *socket_path)
 }
 
 void
-make_request (const char *request, char *response)
+make_request (const char *request, char *buffer)
 {
   char socket_path[PATH_MAX];
   struct sockaddr_un addr;
@@ -97,7 +97,7 @@ make_request (const char *request, char *response)
               strerror (errno));
     }
 
-  ret = read (data_socket, response, sizeof (response));
+  ret = read (data_socket, buffer, ARRAY_SIZE (buffer));
   if (ret == -1)
     {
       printf ("make_request: Read error from socket: %s\n",
@@ -105,8 +105,8 @@ make_request (const char *request, char *response)
       return;
     }
 
-  response[sizeof (response) - 1] = 0;
-  printf ("make_request: response: %s\n", response);
+  buffer[ARRAY_SIZE (buffer) - 1] = 0;
+  printf ("make_request: response: %s\n", buffer);
 
   close (data_socket);
 }
