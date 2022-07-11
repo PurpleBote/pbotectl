@@ -7,7 +7,7 @@ pbotectl (Plus Bote Control Tool) - is a CLI utility for [pboted](https://github
 
 ## Features
 
-- 
+- Show some pboted entities (JSON and plain text)
 
 ### Planned Features
 
@@ -30,17 +30,30 @@ You can fetch precompiled packages and binaries on [release](https://github.com/
 
 ## Building
 
+- Install requirenments
 
+```bash
+apt install libcjson-dev
+```
+
+- Build
+
+```bash
+cd build
+cmake .
+make
+```
 
 ## Usage
 
-
+- **pboted** need to be run as UNIX-daemon
+- You can see available commands with `./pbotectl help`
 
 ## Donations
 
 - **BTC**: 
 - **GOST**: 
-- **XMR**: 89xqER2GpS3Bqm8z8AuqKx5Cpf9BR1codN1VdufcAEbFP2t9oWPvKpzfr6s6dNDRFHVfRijiCQA3uCFYQLzfsWtM3ahbSqp
+- **XMR**: `89xqER2GpS3Bqm8z8AuqKx5Cpf9BR1codN1VdufcAEbFP2t9oWPvKpzfr6s6dNDRFHVfRijiCQA3uCFYQLzfsWtM3ahbSqp`
 
 ## License
 

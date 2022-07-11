@@ -1,6 +1,6 @@
 /*
  * util.h: code with usefull functions and constants
- * Copyright (C) 2019-2022 polistern
+ * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
  *

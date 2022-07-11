@@ -1,6 +1,6 @@
 /*
- * pbotectl.c: CLI utility for Plus Bote daemon
- * Copyright (C) 2019-2022 polistern
+ * pbotectl.c: CLI utility for Plus Bote Daemon
+ * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
  *
@@ -35,10 +35,10 @@ struct cmd_struct
 static struct cmd_struct commands[] = {
   { "help", cmd_help },
   { "version", cmd_version },
-  //
+  ///
   { "show", cmd_show },
   //{ "status", cmd_show },
-  //
+  ///
   { "daemon", cmd_daemon },
   { "identity", cmd_identity },
   { "node", cmd_node },
@@ -118,7 +118,7 @@ handle_options (const char ***argv, int *argc, int *envchanged, int *need_help)
           if (*argc < 2)
             {
               fprintf (stderr, "no socket given for --socket\n");
-              need_help = 1;
+              *need_help = 1;
               break;
             }
           
@@ -140,7 +140,7 @@ handle_options (const char ***argv, int *argc, int *envchanged, int *need_help)
       else
         {
           fprintf (stderr, "unknown option: %s\n", cmd);
-          need_help = 1;
+          *need_help = 1;
           break;
         }
       
