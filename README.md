@@ -13,6 +13,7 @@ pbotectl (Plus Bote Control Tool) - is a CLI utility for [pboted](https://github
 
 - Bote identity creation
 - Aliases controling
+- Launching periodic tasks
 - Metrics and statuses
 
 ## Resources
@@ -25,17 +26,15 @@ You can fetch precompiled packages and binaries on [release](https://github.com/
 
 ### Supported systems
 
-- GNU/Linux
-  - Debian / Ubuntu - [![Build on Ubuntu](https://github.com/polistern/pbotectl/actions/workflows/build.yml/badge.svg)](https://github.com/polistern/pbotectl/actions/workflows/build.yml)
+- GNU/Linux - [![Build](https://github.com/polistern/pbotectl/actions/workflows/build.yml/badge.svg)](https://github.com/polistern/pbotectl/actions/workflows/build.yml)
+  - Debian / Ubuntu - [![Build DEB](https://github.com/polistern/pbotectl/actions/workflows/build-deb.yml/badge.svg)](https://github.com/polistern/pbotectl/actions/workflows/build-deb.yml)
 
 ## Building
 
-- Install requirenments
-
-```bash
-apt install libcjson-dev
-```
-
+- Install requirements
+    - Compiler with C99 support (GCC >= 5, clang)
+    - cmake >= 3.7
+    - libcjson-dev >= 1.7.10
 - Build
 
 ```bash

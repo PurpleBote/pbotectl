@@ -19,6 +19,16 @@ include(ExternalProject)
 include(TargetArch)
 target_architecture(ARCHITECTURE)
 
+# check for C99 support
+include(CheckCCompilerFlag)
+CHECK_C_COMPILER_FLAG("-std=c99" C99_SUPPORTED)
+if (C99_SUPPORTED)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+else ()
+    message(SEND_ERROR "C99 standard not seems to be supported by compiler. Too old version?")
+endif ()
+
+# libraries
 find_package(cJSON REQUIRED)
 if (NOT CJSON_FOUND)
     message(SEND_ERROR "Could not find cJSON. Please download and install it first!")
