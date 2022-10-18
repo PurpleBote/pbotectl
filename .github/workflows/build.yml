@@ -13,7 +13,7 @@ jobs:
     - name: Install required packages
       run: |
         sudo apt-get update
-        sudo apt-get install build-essential cmake libcjson-dev
+        sudo apt-get install build-essential cmake libcjson-dev gettext
     - name: Build application
       run: |
         cd build
