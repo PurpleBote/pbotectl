@@ -1,5 +1,6 @@
 /*
  * util.h: code with usefull functions and constants
+ * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -21,38 +22,32 @@
 #ifndef PBOTECTL_UTIL_H
 #define PBOTECTL_UTIL_H
 
-#include <sys/stat.h>
+#include <inttypes.h>
 
 #define ARRAY_SIZE(x) (sizeof (x) / sizeof (x[0]))
 
 #define EXIT_SUCCESS 0
 
 #define PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT "PBOTECTL_USE_JSON_OUTPUT"
+/* Connection type */
+#define PBOTECTL_CONNECT_USE_SOCKET "PBOTECTL_USE_SOCKET"
+/* For connection to daemon socket locally */
 #define PBOTECTL_SOCKET_PATH_ENVIRONMENT "PBOTECTL_SOCKET_PATH"
+/* or remote */
+#define PBOTECTL_DAEMON_HOST_ENVIRONMENT "PBOTECTL_DAEMON_HOST"
+#define PBOTECTL_DAEMON_PORT_ENVIRONMENT "PBOTECTL_DAEMON_PORT"
 
-//#define RUN_SETUP      (1<<0)
-//#define NEED_WORK_TREE (1<<3)
+/*#define RUN_SETUP      (1<<0)*/
+/*#define NEED_WORK_TREE (1<<3)*/
 
-static inline int
-skip_prefix (const char *str, const char *prefix, const char **out)
-{
-  do
-    {
-      if (!*prefix)
-        {
-          *out = str;
-          return 1;
-        }
-    }
-  while (*str++ == *prefix++);
-  return 0;
-}
+int skip_prefix (const char *str, const char *prefix, const char **out);
 
-static inline int
-file_exists (const char *filename)
-{
-    struct stat buffer;
-    return stat (filename, &buffer) == 0 ? 1 : 0;
-}
+int file_exists (const char *filename);
 
-#endif // PBOTECTL_UTIL_H
+static const char     *sizes[]   = { "EiB", "PiB", "TiB", "GiB", "MiB", "KiB", "B" };
+static const uint64_t  exbibytes = 1024ULL * 1024ULL * 1024ULL *
+                                   1024ULL * 1024ULL * 1024ULL;
+
+char * bs2l (uint64_t size);
+
+#endif /* PBOTECTL_UTIL_H */

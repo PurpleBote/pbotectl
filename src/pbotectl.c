@@ -1,5 +1,6 @@
 /*
  * pbotectl.c: CLI utility for Plus Bote Daemon
+ * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -23,6 +24,7 @@
 #include <string.h>
 
 #include "commands.h"
+#include "gettext.h"
 #include "util.h"
 #include "version.h"
 
@@ -35,12 +37,13 @@ struct cmd_struct
 static struct cmd_struct commands[] = {
   { "help", cmd_help },
   { "version", cmd_version },
-  ///
+  /* Overview */
   { "show", cmd_show },
-  //{ "status", cmd_show },
-  ///
+  /* ToDo: { "status", cmd_status },*/
+  /* Detailed */
   { "daemon", cmd_daemon },
   { "identity", cmd_identity },
+  /* ToDo: { "mail", cmd_mail },*/
   { "node", cmd_node },
   { "peer", cmd_peer },
   { "storage", cmd_storage },
@@ -49,7 +52,10 @@ static struct cmd_struct commands[] = {
 const char * const env_var[]
 = {
    PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT,
+   PBOTECTL_CONNECT_USE_SOCKET,
    PBOTECTL_SOCKET_PATH_ENVIRONMENT,
+   PBOTECTL_DAEMON_HOST_ENVIRONMENT,
+   PBOTECTL_DAEMON_PORT_ENVIRONMENT,
    NULL
 };
 
@@ -73,7 +79,8 @@ is_command (const char *s)
 }
 
 static int
-run_command (struct cmd_struct *p, int argc, const char **argv)
+/*run_command (struct cmd_struct *p, int argc, const char **argv)*/
+run_command (struct cmd_struct *p, int argc, char **argv)
 {
   int status;
   const char *prefix;
@@ -88,11 +95,27 @@ run_command (struct cmd_struct *p, int argc, const char **argv)
 }
 
 static int
-handle_options (const char ***argv, int *argc, int *envchanged, int *need_help)
+/*handle_options (const char ***argv, int *argc, int *envchanged, int *need_help)*/
+handle_options (char ***argv, int *argc, int *envchanged, int *need_help)
 {
-  const char **orig_argv = *argv;
+  /*const char **orig_argv = *argv;*/
+  char **orig_argv = *argv;
+
+  if (0 == strcmp((*argv)[0], "-h"))
+    {
+      char *str = "--help";
+      (*argv)[0] = (char *)malloc(strlen(str));
+      strcpy((*argv)[0], str);
+    }
+
+  if (0 == strcmp((*argv)[0], "-v"))
+    {
+      char *str = "--version";
+      (*argv)[0] = (char *)malloc(strlen(str));
+      strcpy((*argv)[0], str);
+    }
   
-  // Check if first parameter is comand
+  /* Check if first parameter is command */
   if (is_command ((*argv)[0]))
     return 0;
   
@@ -100,46 +123,68 @@ handle_options (const char ***argv, int *argc, int *envchanged, int *need_help)
     {
       const char *cmd = (*argv)[0];
 
-      // If we get command
+      /* If we still get command */
       if (cmd[0] != '-')
         break;
 
-      if (!strcmp(cmd, "--help") || !strcmp(cmd, "--version"))
+      if (0 == strcmp(cmd, "--help") || 0 == strcmp(cmd, "--version"))
         break;
 
-      if (!strcmp(cmd, "-j") || !strcmp(cmd, "--json"))
+      if (0 == strcmp(cmd, "-j") || 0 == strcmp(cmd, "--json"))
         {
           setenv (PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT, "1", 1);
           if (envchanged)
             *envchanged = 1;
         }
-      else if (!strcmp (cmd, "-s") || !strcmp (cmd, "--socket"))
+      else if (0 == strcmp (cmd, "-s") || 0 == strcmp (cmd, "--socket"))
         {
-          if (*argc < 2)
-            {
-              fprintf (stderr, "no socket given for --socket\n");
-              *need_help = 1;
-              break;
-            }
+          setenv (PBOTECTL_CONNECT_USE_SOCKET, "1", 1);
+
+          if (envchanged)
+            *envchanged = 1;
           
-          setenv (PBOTECTL_SOCKET_PATH_ENVIRONMENT, (*argv)[1], 1);
+          (*argv)++;
+          (*argc)--;
+          break;
+        }
+      else if (skip_prefix (cmd, "--socket=", &cmd))
+        {
+          setenv (PBOTECTL_CONNECT_USE_SOCKET, "1", 1);
+          setenv (PBOTECTL_SOCKET_PATH_ENVIRONMENT, cmd, 1);
+          
+          if (envchanged)
+            *envchanged = 1;
+        }
+      else if (0 == strcmp (cmd, "-t") || 0 == strcmp (cmd, "--tcp"))
+        {
+          setenv (PBOTECTL_CONNECT_USE_SOCKET, "0", 1);
           
           if (envchanged)
             *envchanged = 1;
           
           (*argv)++;
           (*argc)--;
+          break;
         }
-      else if (skip_prefix (cmd, "--socket=", &cmd))
+      else if (skip_prefix (cmd, "--host=", &cmd))
         {
-          setenv (PBOTECTL_SOCKET_PATH_ENVIRONMENT, cmd, 1);
+          setenv (PBOTECTL_CONNECT_USE_SOCKET, "0", 1);
+          setenv (PBOTECTL_DAEMON_HOST_ENVIRONMENT, cmd, 1);
+          
+          if (envchanged)
+            *envchanged = 1;
+        }
+      else if (skip_prefix (cmd, "--port=", &cmd))
+        {
+          setenv (PBOTECTL_CONNECT_USE_SOCKET, "0", 1);
+          setenv (PBOTECTL_DAEMON_PORT_ENVIRONMENT, cmd, 1);
           
           if (envchanged)
             *envchanged = 1;
         }
       else
         {
-          fprintf (stderr, "unknown option: %s\n", cmd);
+          fprintf (stderr, _("unknown option: %s\n"), cmd);
           *need_help = 1;
           break;
         }
@@ -152,7 +197,8 @@ handle_options (const char ***argv, int *argc, int *envchanged, int *need_help)
 }
 
 static void
-handle_command (int argc, const char **argv)
+/*handle_command (int argc, const char **argv)*/
+handle_command (int argc, char **argv)
 {
   const char *cmd;
   struct cmd_struct *command;
@@ -164,7 +210,7 @@ handle_command (int argc, const char **argv)
     exit (run_command (command, argc, argv));
   else
     {
-      printf ("Unknown command or parameter: %s\n\n", cmd);
+      printf (_("Unknown command or parameter: %s\n\n"), cmd);
       command = get_command ("help");
       exit (run_command (command, argc, argv));
     }
@@ -176,37 +222,45 @@ main (int argc, char *argv[])
   const char *cmd;
   int need_help = 0;
 
-  // For skipping bin name
+  /* For skipping bin name */
   argc--;
   argv++;
 
-  // For debug purpose
-  /*
+#if DEBUG_MODE
   printf ("argc:    %d\n", argc);
   if (argc > 0)
     {
-      for (int i = 0; i < argc; i++)
+      int i = 0;
+      for (i = 0; i < argc; i++)
         {
           printf ("argv[%d]: %s\n", i, argv[i]);
         }
     }
-  */
+#endif
+
+  /*setlocale (LC_ALL, "");*/
+  setlocale (LC_CTYPE, "");
+  /*setlocale (LC_CTYPE, "C");*/
+  setlocale (LC_MESSAGES, "");
+#ifndef _WIN32
+  bindtextdomain (PACKAGE, "/usr/share/locale");
+#endif
+  textdomain (PACKAGE);
 
   handle_options (&argv, &argc, NULL, &need_help);
 
   if (need_help)
-    {
-      argv[0] = "help";
-    }
+    argv[0] = "help";
+
   if (argc > 0)
     {
-      // translate --help and --version into commands
+      /* Translate --help and --version into commands */
       skip_prefix (argv[0], "--", &argv[0]);
     }
   else
     {
-      // The user didn't specify a command; give them help
-      fprintf (stderr, "no command given\n\n");
+      /* The user didn't specify a command; give them help */
+      fprintf (stderr, _("no command given\n\n"));
       argv[0] = "help";
     }
 
@@ -214,9 +268,7 @@ main (int argc, char *argv[])
 
   if (!cmd)
     argv[0] = cmd = "help";
-
-  // For debug purpose
-  /*
+#if DEBUG_MODE
   printf ("cmd: %s\n", cmd);
 
   int i = 0;
@@ -229,7 +281,7 @@ main (int argc, char *argv[])
         printf("%s: NULL\n", env_var[i]);
       i++;
     }
-  */
+#endif
 
   handle_command (argc, argv);
 

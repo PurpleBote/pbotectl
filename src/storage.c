@@ -1,5 +1,6 @@
 /*
  * storage.c: code to handle storage related commands
+ * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -18,48 +19,29 @@
  * along with pbotectl. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <cjson/cJSON.h>
 #include <stdio.h>
+
+#include "cjson/cJSON.h"
 
 #include "commands.h"
 #include "storage.h"
 
-static struct subcmd_struct daemon_subcmds[] = {
+static struct subcmd_struct storage_subcmds[] = {
   { "help", subcmd_storage_help },
   { "show", subcmd_storage_show },
   { "used", subcmd_storage_used },
   { "clean", subcmd_storage_clean },
 };
 
-int
-cmd_storage (int argc, const char **argv, const char *prefix)
-{
-  const char *subcmd;
-  int exit_status = 0;
-
-  // For skipping command name
-  argc--;
-  argv++;
-
-  // Try to find subcommand
-  subcmd = argv[0];
-
-  if (!subcmd)
-    exit_status = 1;
-  else
-    exit_status = handle_subcommand (argc, argv, daemon_subcmds,
-                                     ARRAY_SIZE (daemon_subcmds));
-
-  return exit_status;
-}
+MAKE_FIND_SUBCOMMAND(cmd_storage, storage_subcmds)
 
 int
 subcmd_storage_help (int argc, const char **argv, const char *prefix)
 {
   int exit_status = 0;
 
-  // ToDo:
-  printf ("storage help\n");
+  /* ToDo: */
+  printf (_("storage help\n"));
 
   return exit_status;
 }
@@ -71,13 +53,13 @@ subcmd_storage_show (int argc, const char **argv, const char *prefix)
   int exit_status = 0;
 
   char cmd_str[] = STORAGE_COMMAND_PREFIX;
-  strcat (cmd_str, STORAGE_COMMAND_PARAM_SHOW); // ToDo
+  strcat (cmd_str, STORAGE_COMMAND_PARAM_SHOW); /* ToDo */
 
   make_request (cmd_str, buffer);
 
-  if (!buffer)
+  if (!*buffer)
     {
-      printf ("Empty response from server\n");
+      printf (_("Empty response from server\n"));
       exit_status = 1;
     }
 
@@ -100,7 +82,7 @@ subcmd_storage_show (int argc, const char **argv, const char *prefix)
       return exit_status;
     }
 
-  printf ("Used:\t%f\n", used_json->valuedouble );
+  printf (_("Used:\t%f\n"), used_json->valuedouble );
 
   return exit_status;
 }
@@ -112,13 +94,13 @@ subcmd_storage_used (int argc, const char **argv, const char *prefix)
   int exit_status = 0;
 
   char cmd_str[] = STORAGE_COMMAND_PREFIX;
-  strcat (cmd_str, STORAGE_COMMAND_PARAM_USED); // ToDo
+  strcat (cmd_str, STORAGE_COMMAND_PARAM_USED); /* ToDo */
 
   make_request (cmd_str, buffer);
 
-  if (!buffer)
+  if (!*buffer)
     {
-      printf ("Empty response from server\n");
+      printf (_("Empty response from server\n"));
       exit_status = 1;
     }
 
@@ -141,7 +123,7 @@ subcmd_storage_used (int argc, const char **argv, const char *prefix)
       return exit_status;
     }
 
-  printf ("Used:\t%f\n", used_json->valuedouble );
+  printf (_("Used:\t%f\n"), used_json->valuedouble );
 
   return exit_status;
 }
@@ -151,8 +133,8 @@ subcmd_storage_clean (int argc, const char **argv, const char *prefix)
 {
   int exit_status = 0;
 
-  // ToDo:
-  printf ("storage clean\n");
+  /* ToDo: */
+  printf (_("storage clean\n"));
 
   return exit_status;
 }

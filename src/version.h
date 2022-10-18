@@ -1,5 +1,6 @@
 /*
  * version.h: code with version related variables and commands
+ * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -18,14 +19,15 @@
  * along with pbotectl. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PBOTECTL_VERSION_H__
-#define PBOTECTL_VERSION_H__
+#ifndef PBOTECTL_VERSION_H
+#define PBOTECTL_VERSION_H
 
 #include <stdio.h>
 
 #include "commands.h"
 
-#define CODENAME "Plus Bote Control Tool"
+#define CODENAME "Purple Bote Control Tool"
+#define PACKAGE "pbotectl"
 
 #define STRINGIZE(x) #x
 #define MAKE_VERSION(a, b, c) STRINGIZE (a) "." STRINGIZE (b) "." STRINGIZE (c)
@@ -35,15 +37,12 @@
 #define PBOTECTL_VERSION_MICRO 0
 
 #define PBOTECTL_VERSION                                                      \
-  MAKE_VERSION (PBOTECTL_VERSION_MAJOR, PBOTECTL_VERSION_MINOR,               \
+  MAKE_VERSION (PBOTECTL_VERSION_MAJOR,                                       \
+                PBOTECTL_VERSION_MINOR,                                       \
                 PBOTECTL_VERSION_MICRO)
+
 #define VERSION PBOTECTL_VERSION
 
-static inline int
-cmd_version (int argc, const char **argv, const char *prefix)
-{
-  printf ("%s, version %s\n", CODENAME, VERSION);
-  return 0;
-}
+int cmd_version (int argc, const char **argv, const char *prefix);
 
-#endif // PBOTECTL_VERSION_H__
+#endif /* PBOTECTL_VERSION_H */

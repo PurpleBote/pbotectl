@@ -71,3 +71,11 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# I18N
+/src/po/*
+*.pot
+*.po
+*.po.*
+*.mo
+*.mo.*

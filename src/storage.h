@@ -1,5 +1,6 @@
 /*
  * storage.h: interfaces to storage related commands
+ * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -32,4 +33,4 @@ int subcmd_storage_show (int argc, const char **argv, const char *prefix);
 int subcmd_storage_used (int argc, const char **argv, const char *prefix);
 int subcmd_storage_clean (int argc, const char **argv, const char *prefix);
 
-#endif // PBOTECTL_STORAGE_H
+#endif /* PBOTECTL_STORAGE_H */

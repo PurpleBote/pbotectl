@@ -1,13 +1,13 @@
-[![GitHub release](https://img.shields.io/github/release/polistern/pbotectl.svg?label=latest%20release)](https://github.com/polistern/pbotectl/releases/latest)
-[![License](https://img.shields.io/github/license/polistern/pbotectl.svg)](https://github.com/polistern/pbotectl/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/PurpleBote/pbotectl.svg?label=latest%20release)](https://github.com/PurpleBote/pbotectl/releases/latest)
+[![License](https://img.shields.io/github/license/PurpleBote/pbotectl.svg)](https://github.com/PurpleBote/pbotectl/blob/master/LICENSE)
 
 # pbotectl
 
-pbotectl (Plus Bote Control Tool) - is a CLI utility for [pboted](https://github.com/polistern/pboted)
+pbotectl (Purple Bote Control Tool) - is a CLI utility for [pboted](https://github.com/PurpleBote/pboted)
 
 ## Features
 
-- Show some pboted entities (JSON and plain text)
+- Show some pboted entities and metrics (JSON and plain text)
 
 ### Planned Features
 
@@ -18,24 +18,24 @@ pbotectl (Plus Bote Control Tool) - is a CLI utility for [pboted](https://github
 
 ## Resources
 
-* [Tickets/Issues](https://github.com/polistern/pbotectl/issues)
+* [Tickets/Issues](https://github.com/PurpleBote/pbotectl/issues)
 
 ## Installing
 
-You can fetch precompiled packages and binaries on [release](https://github.com/polistern/pbotectl/releases/latest) page.
+You can fetch precompiled packages and binaries on [release](https://github.com/PurpleBote/pbotectl/releases/latest) page.
 
 ### Supported systems
 
-- GNU/Linux - [![Build](https://github.com/polistern/pbotectl/actions/workflows/build.yml/badge.svg)](https://github.com/polistern/pbotectl/actions/workflows/build.yml)
-  - Debian / Ubuntu - [![Build DEB](https://github.com/polistern/pbotectl/actions/workflows/build-deb.yml/badge.svg)](https://github.com/polistern/pbotectl/actions/workflows/build-deb.yml)
+- GNU/Linux - [![Build](https://github.com/PurpleBote/pbotectl/actions/workflows/build.yml/badge.svg)](https://github.com/PurpleBote/pbotectl/actions/workflows/build.yml)
+  - Debian / Ubuntu - [![Build DEB](https://github.com/PurpleBote/pbotectl/actions/workflows/build-deb.yml/badge.svg)](https://github.com/PurpleBote/pbotectl/actions/workflows/build-deb.yml)
 
 ## Building
 
-- Install requirements
-    - Compiler with C99 support (GCC >= 5, clang)
+- Install requirements:
+    - Compiler with ANSI C89 support (GCC, Clang)
     - cmake >= 3.7
     - libcjson-dev >= 1.7.10
-- Build
+- Build:
 
 ```bash
 cd build
@@ -45,13 +45,11 @@ make
 
 ## Usage
 
-- **pboted** need to be run as UNIX-daemon
+- **pboted** need to be run with enabled and configured control interface
 - You can see available commands with `./pbotectl help`
 
 ## Donations
 
-- **BTC**: 
-- **GOST**: 
 - **XMR**: `89xqER2GpS3Bqm8z8AuqKx5Cpf9BR1codN1VdufcAEbFP2t9oWPvKpzfr6s6dNDRFHVfRijiCQA3uCFYQLzfsWtM3ahbSqp`
 
 ## License

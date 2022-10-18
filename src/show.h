@@ -1,5 +1,6 @@
 /*
  * show.h: interfaces to show related commands
+ * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -32,4 +33,4 @@
 int subcmd_show_help (int argc, const char **argv, const char *prefix);
 int subcmd_show_all (int argc, const char **argv, const char *prefix);
 
-#endif // PBOTECTL_SHOW_H
+#endif /* PBOTECTL_SHOW_H */

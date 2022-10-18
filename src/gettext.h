@@ -1,5 +1,5 @@
 /*
- * daemon.h: interfaces to daemon related commands
+ * gettext.h: libintl.h wrapper
  * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
@@ -19,16 +19,17 @@
  * along with pbotectl. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PBOTECTL_DAEMON_H
-#define PBOTECTL_DAEMON_H
+#ifndef GETTEXT_H
+#define GETTEXT_H
 
-#define DAEMON_COMMAND_PREFIX "daemon."
+#if defined(_)
+#error "namespace conflict: '_' is pre-defined?"
+#endif
 
-#define DAEMON_COMMAND_PARAM_SHOW   "show"
-#define DAEMON_COMMAND_PARAM_UPTIME "uptime"
+#include <libintl.h>
+#include <locale.h>
 
-int subcmd_daemon_help (int argc, const char **argv, const char *prefix);
-int subcmd_daemon_show (int argc, const char **argv, const char *prefix);
-int subcmd_daemon_uptime (int argc, const char **argv, const char *prefix);
+#define _(msgid) gettext(msgid)
+/*#define N_(msgid) (msgid)*/
 
-#endif /* PBOTECTL_DAEMON_H */
+#endif /* GETTEXT_H */

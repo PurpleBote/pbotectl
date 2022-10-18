@@ -19,10 +19,10 @@ Package: pbotectl
 Architecture: any
 Pre-Depends:
  ${misc:Pre-Depends},
- adduser,
- pboted
+ adduser
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
  lsb-base
 Description: CLI utility for Plus Bote daemon
+ Used to control pboted daemon

@@ -1,5 +1,6 @@
 /*
  * identity.h: interfaces to identity related commands
+ * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -29,4 +30,4 @@ int subcmd_identity_help (int argc, const char **argv, const char *prefix);
 int subcmd_identity_show (int argc, const char **argv, const char *prefix);
 int subcmd_identity_count(int argc, const char **argv, const char *prefix);
 
-#endif // PBOTECTL_IDENTITY_H
+#endif /* PBOTECTL_IDENTITY_H */

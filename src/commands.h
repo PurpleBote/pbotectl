@@ -1,5 +1,6 @@
 /*
  * commands.h: interfaces of available commands
+ * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -24,94 +25,72 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "gettext.h"
 #include "util.h"
 
 #define DEFAULT_BUFFER_SIZE 8192
 
+#define MAKE_FIND_SUBCOMMAND(CMD_NAME, SUBCMD_NAME) \
+int \
+CMD_NAME (int argc, const char **argv, const char *prefix) \
+{ \
+  const char *subcmd; \
+  int exit_status = 0; \
+  /* For skipping command name */ \
+  argc--;\
+  argv++;\
+  /* Try to find subcommand */ \
+  subcmd = argv[0]; \
+  if (!subcmd) \
+    exit_status = 1; \
+  else \
+    exit_status = handle_subcommand (argc, argv, SUBCMD_NAME, \
+                                     ARRAY_SIZE (SUBCMD_NAME)); \
+  return exit_status; \
+}
+
 void make_request (const char *request, char *buffer);
 
 int cmd_help (int argc, const char **argv, const char *prefix);
-// cmd_version defined in version.h
+/* cmd_version defined in version.h */
 
 int cmd_show (int argc, const char **argv, const char *prefix);
-//int cmd_status (int argc, const char **argv, const char *prefix);
+/*int cmd_status (int argc, const char **argv, const char *prefix); */
 
-/// mail command
-//int cmd_mail (int argc, const char **argv, const char *prefix);
-//int cmd_task (int argc, const char **argv, const char *prefix);
-//int cmd_alias (int argc, const char **argv, const char *prefix);
+/* mail commands */
+/*
+int cmd_mail (int argc, const char **argv, const char *prefix);
+int cmd_task (int argc, const char **argv, const char *prefix);
+int cmd_alias (int argc, const char **argv, const char *prefix);
+*/
 
-/// bote commands
+/* bote commands */
 int cmd_daemon (int argc, const char **argv, const char *prefix);
 int cmd_identity (int argc, const char **argv, const char *prefix);
 int cmd_node (int argc, const char **argv, const char *prefix);
 int cmd_peer (int argc, const char **argv, const char *prefix);
 int cmd_storage (int argc, const char **argv, const char *prefix);
 
-/// Subcommands
-
+/* Subcommands */
 struct subcmd_struct
 {
   const char *subcmd;
   int (*fn) (int, const char **, const char *);
 };
 
-static inline struct subcmd_struct *
-get_subcommand (const char *s, struct subcmd_struct subcmds[], size_t len)
-{
-  unsigned long i;
-  for (i = 0; i < len; i++)
-    {
-      struct subcmd_struct *p = subcmds + i;
-      if (!strcmp (s, p->subcmd))
-        return p;
-    }
-  return NULL;
-}
+struct subcmd_struct *
+get_subcommand (const char *s, struct subcmd_struct subcmds[], size_t len);
+int is_subcommand (const char *s, struct subcmd_struct subcmds[], size_t len);
 
-static inline int
-is_subcommand (const char *s, struct subcmd_struct subcmds[], size_t len)
-{
-  return !!get_subcommand (s, subcmds, len);
-}
+int run_subcommand (struct subcmd_struct *p, int argc, const char **argv);
 
-static inline int
-run_subcommand (struct subcmd_struct *p, int argc, const char **argv)
-{
-  int status;
-  const char *prefix;
-  prefix = NULL;
+int handle_subcommand (int argc, const char **argv, struct subcmd_struct subcmds[], size_t len);
 
-  status = p->fn (argc, argv, prefix);
+/*
+struct subcmd_struct * get_subcommand (const char *s);
+int is_subcommand (const char *s);
+int run_subcommand (struct subcmd_struct *p, int argc, const char **argv);
+int handle_subcommand (int argc, const char **argv);
+*/
 
-  if (status)
-    return status;
-
-  return EXIT_SUCCESS;
-}
-
-static inline int
-handle_subcommand (int argc, const char **argv, struct subcmd_struct subcmds[], size_t len)
-{
-  const char *subcmd;
-  struct subcmd_struct *command;
-
-  subcmd = argv[0];
-
-  command = get_subcommand (subcmd, subcmds, len);
-  if (command)
-    return (run_subcommand (command, argc, argv));
-  else
-    {
-      printf ("Unknown command or parameter: %s\n\n", subcmd);
-      command = get_subcommand ("help", subcmds, len);
-      return (run_subcommand (command, argc, argv));
-    }
-}
-
-//struct subcmd_struct * get_subcommand (const char *s);
-//int is_subcommand (const char *s);
-//int run_subcommand (struct subcmd_struct *p, int argc, const char **argv);
-//int handle_subcommand (int argc, const char **argv);
-
-#endif // PBOTECTL_COMMANDS_H
+#endif /* PBOTECTL_COMMANDS_H */

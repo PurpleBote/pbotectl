@@ -1,5 +1,6 @@
 /*
  * node.c: code to handle node related commands
+ * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -18,10 +19,12 @@
  * along with pbotectl. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <cjson/cJSON.h>
 #include <stdio.h>
 
+#include "cjson/cJSON.h"
+
 #include "commands.h"
+#include "gettext.h"
 #include "node.h"
 
 static struct subcmd_struct node_subcommands[] = {
@@ -31,35 +34,15 @@ static struct subcmd_struct node_subcommands[] = {
   { "stats", subcmd_node_stats },
 };
 
-int
-cmd_node (int argc, const char **argv, const char *prefix)
-{
-  const char *subcmd;
-  int exit_status = 0;
-
-  // For skipping command name
-  argc--;
-  argv++;
-
-  // Try to find subcommand
-  subcmd = argv[0];
-
-  if (!subcmd)
-    exit_status = 1;
-  else
-    exit_status = handle_subcommand (argc, argv, node_subcommands,
-                                     ARRAY_SIZE (node_subcommands));
-
-  return exit_status;
-}
+MAKE_FIND_SUBCOMMAND(cmd_node, node_subcommands)
 
 int
 subcmd_node_help (int argc, const char **argv, const char *prefix)
 {
   int exit_status = 0;
 
-  // ToDo:
-  printf ("node help\n");
+  /* ToDo: */
+  printf (_("node help\n"));
 
   return exit_status;
 }
@@ -69,8 +52,8 @@ subcmd_node_show (int argc, const char **argv, const char *prefix)
 {
   int exit_status = 0;
 
-  // ToDo:
-  printf ("node show\n");
+  /* ToDo: */
+  printf (_("node show\n"));
 
   return exit_status;
 }
@@ -86,9 +69,9 @@ subcmd_node_count (int argc, const char **argv, const char *prefix)
 
   make_request (cmd_str, buffer);
 
-  if (!buffer)
+  if (!*buffer)
     {
-      printf ("Empty response from server\n");
+      printf (_("Empty response from server\n"));
       exit_status = 1;
     }
 
@@ -113,8 +96,8 @@ subcmd_node_count (int argc, const char **argv, const char *prefix)
       return exit_status;
     }
 
-  printf ("Total:\t\t%d\n", total_json->valueint);
-  printf ("Unlocked:\t%d\n", unlocked_json->valueint);
+  printf (_("Total:\t\t%d\n"), total_json->valueint);
+  printf (_("Unlocked:\t%d\n"), unlocked_json->valueint);
 
   return exit_status;
 }
@@ -124,8 +107,8 @@ subcmd_node_stats (int argc, const char **argv, const char *prefix)
 {
   int exit_status = 0;
 
-  // ToDo:
-  printf ("node stats\n");
+  /* ToDo: */
+  printf (_("node stats\n"));
 
   return exit_status;
 }

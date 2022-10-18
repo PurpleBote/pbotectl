@@ -1,5 +1,6 @@
 /*
  * peer.h: interfaces to peer related commands
+ * Copyright (C) 2022, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -32,4 +33,4 @@ int subcmd_peer_show (int argc, const char **argv, const char *prefix);
 int subcmd_peer_count(int argc, const char **argv, const char *prefix);
 int subcmd_peer_stats (int argc, const char **argv, const char *prefix);
 
-#endif // PBOTECTL_PEER_H
+#endif /* PBOTECTL_PEER_H */
