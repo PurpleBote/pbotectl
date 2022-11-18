@@ -29,7 +29,8 @@
 #include <libintl.h>
 #include <locale.h>
 
-#define _(msgid) gettext(msgid)
-/*#define N_(msgid) (msgid)*/
+#define _(STRING) gettext(STRING)
+#define N_(STRING) STRING
+#define P_(SINGULAR, PLURAL, N) ngettext(SINGULAR, PLURAL, N)
 
 #endif /* GETTEXT_H */

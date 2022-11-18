@@ -238,14 +238,16 @@ main (int argc, char *argv[])
     }
 #endif
 
+#ifdef _WIN32
+  /* NOOP */
+#else
   /*setlocale (LC_ALL, "");*/
-  setlocale (LC_CTYPE, "");
-  /*setlocale (LC_CTYPE, "C");*/
+  /*setlocale (LC_CTYPE, "");*/
   setlocale (LC_MESSAGES, "");
-#ifndef _WIN32
-  bindtextdomain (PACKAGE, "/usr/share/locale");
 #endif
-  textdomain (PACKAGE);
+  bindtextdomain (GETTEXT_DOMAIN, "/usr/share/locale");
+  bind_textdomain_codeset(GETTEXT_DOMAIN, "UTF-8");
+  textdomain (GETTEXT_DOMAIN);
 
   handle_options (&argv, &argc, NULL, &need_help);
 
