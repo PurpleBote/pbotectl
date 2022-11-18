@@ -106,93 +106,8 @@ if (NOT GETTEXT_FOUND)
 message(SEND_ERROR "Gettext is not found. Please download and install it first!")
 endif ()
 
-
-#find_program(GETTEXT_XGETTEXT_EXECUTABLE xgettext)
-#find_program(GETTEXT_MSGMERGE_EXECUTABLE msgmerge)
-#find_program(GETTEXT_MSGFMT_EXECUTABLE msgfmt)
-
-#if (GETTEXT_XGETTEXT_EXECUTABLE)
-#    message(DEBUG "xgettext: ${GETTEXT_XGETTEXT_EXECUTABLE}")
-#    add_custom_target(
-#        pot-update
-#        ALL
-#        COMMENT "pot-update: Done."
-#        DEPENDS ${CMAKE_SOURCE_DIR}/src/po/${PROJECT_NAME}.pot)
-#    add_custom_command(
-#        TARGET pot-update
-#        PRE_BUILD
-#        COMMAND
-#            ${GETTEXT_XGETTEXT_EXECUTABLE}
-#            --from-code=utf-8
-#            --language=c
-#            --force-po
-#            --output=${CMAKE_SOURCE_DIR}/src/po/${PROJECT_NAME}.pot
-#            --keyword=_
-#            --width=80
-#            ${PBOTECTL_SRC}
-#        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-#        COMMENT "pot-update: Pot file generated: ${CMAKE_SOURCE_DIR}/src/po/${PROJECT_NAME}.pot"
-#    )
-#endif (GETTEXT_XGETTEXT_EXECUTABLE)
-
-
-
-#if (GETTEXT_MSGMERGE_EXECUTABLE)
-#    message(DEBUG "msgmerge: ${GETTEXT_MSGMERGE_EXECUTABLE}")
-#    add_custom_target(
-#        pot-merge
-#        ALL
-#        COMMENT "pot-merge: Done."
-#        DEPENDS ${CMAKE_SOURCE_DIR}/src/po/${PROJECT_NAME}.pot)
-#    file(GLOB PO_FILES ${CMAKE_SOURCE_DIR}/src/po/*/${PROJECT_NAME}.po)
-#    message(TRACE "PO_FILES: ${PO_FILES}")
-#    foreach(PO_FILE IN ITEMS ${PO_FILES})
-#        message(DEBUG "Adding msgmerge for: ${PO_FILE}")
-#        add_custom_command(
-#            TARGET pot-merge
-#            PRE_BUILD
-#            COMMAND
-#                ${GETTEXT_MSGMERGE_EXECUTABLE} ${PO_FILE}
-#                ${CMAKE_SOURCE_DIR}/src/po/${PROJECT_NAME}.pot
-#            COMMENT "pot-merge: ${PO_FILE}"
-#        )
-#    endforeach()
-#endif (GETTEXT_MSGMERGE_EXECUTABLE)
-
-
-
-#set(AVAILABLE_LANGS "en")
-#if (GETTEXT_MSGFMT_EXECUTABLE)
-#    message(DEBUG "msgmerge: ${GETTEXT_MSGFMT_EXECUTABLE}")
-#    file(GLOB PO_LANGS LIST_DIRECTORIES true ${CMAKE_SOURCE_DIR}/src/po/*)
-#    message(TRACE "PO_LANGS: ${PO_LANGS}")
-#    add_custom_target(
-#        po-compile
-#        ALL
-#        COMMENT "po-compile: Done.")
-#    foreach(PO_LANG IN ITEMS ${PO_LANGS})
-#        if(IS_DIRECTORY ${PO_LANG})
-#            get_filename_component(DIR_NAME "${PO_LANG}" NAME)
-#            list(APPEND AVAILABLE_LANGS ${DIR_NAME})
-#            message(DEBUG "Adding msgfmt for: ${DIR_NAME}")
-#            add_custom_command(
-#                TARGET po-compile
-#                PRE_BUILD
-#                COMMAND
-#                    ${GETTEXT_MSGFMT_EXECUTABLE}
-#                    --output-file=${PROJECT_NAME}.mo
-#                    ${PROJECT_NAME}.po
-#                WORKING_DIRECTORY ${PO_LANG}
-#                COMMENT "po-compile: ${PO_LANG}"
-#            )
-#        endif()
-#    endforeach()
-#endif (GETTEXT_MSGFMT_EXECUTABLE)
-
-#GETTEXT_CREATE_TRANSLATIONS()
-
 set(GETTEXT_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/locales")
-set(GETTEXT_LANGUAGES "en" "ru")
+set(GETTEXT_LANGUAGES "ru")
 
 # Show summary
 message(STATUS "Project            : ${PROJECT_NAME}")
@@ -220,11 +135,14 @@ CONFIGURE_GETTEXT(
     DOMAIN "${PROJECT_NAME}"
     TARGET_NAME "${PROJECT_NAME}-gettext"
     SOURCES "${PBOTECTL_SRC}"
+
     POTFILE_DESTINATION "${GETTEXT_OUTPUT_DIR}"
+    GMOFILE_DESTINATION "${GETTEXT_OUTPUT_DIR}/mo"
+    BUILD_DESTINATION $<TARGET_FILE_DIR:${PROJECT_NAME}>/${GETTEXT_OUTPUT_DIR}/mo
+
     XGETTEXT_ARGS "--keyword=_" "--keyword=N_" "--keyword=P_:1,2"
         "--package-name=${PROJECT_NAME}" "--package-version=${PROJECT_VERSION}"
     LANGUAGES ${GETTEXT_LANGUAGES}
-    BUILD_DESTINATION $<TARGET_FILE_DIR:${PROJECT_NAME}>/${GETTEXT_OUTPUT_DIR}
     ALL
 )
 
@@ -242,5 +160,3 @@ set(LIBS
     ${CMAKE_REQUIRED_LIBRARIES})
 
 target_link_libraries ("${PROJECT_NAME}" ${LIBS})
-
-#add_dependencies ("${PROJECT_NAME}" "${PROJECT_NAME}-gettext")

@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "cjson/cJSON.h"
+#include "cJSON.h"
 
 #include "commands.h"
 #include "daemon.h"

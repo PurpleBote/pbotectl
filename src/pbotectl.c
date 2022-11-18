@@ -238,14 +238,13 @@ main (int argc, char *argv[])
     }
 #endif
 
+  /* Setup i18n */
+  setlocale (LC_MESSAGES, "");
 #ifdef _WIN32
   /* NOOP */
 #else
-  /*setlocale (LC_ALL, "");*/
-  /*setlocale (LC_CTYPE, "");*/
-  setlocale (LC_MESSAGES, "");
-#endif
   bindtextdomain (GETTEXT_DOMAIN, "/usr/share/locale");
+#endif
   bind_textdomain_codeset(GETTEXT_DOMAIN, "UTF-8");
   textdomain (GETTEXT_DOMAIN);
 

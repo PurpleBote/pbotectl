@@ -21,7 +21,7 @@
 
 #include <stdio.h>
 
-#include "cjson/cJSON.h"
+#include "cJSON.h"
 
 #include "commands.h"
 #include "storage.h"

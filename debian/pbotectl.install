@@ -1,1 +1,2 @@
 obj-*/pbotectl usr/sbin/
+locales/mo/ru/LC_MESSAGES/pbotectl.mo usr/share/locale/ru/LC_MESSAGES/

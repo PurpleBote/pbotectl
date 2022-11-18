@@ -34,7 +34,14 @@ You can fetch precompiled packages and binaries on [release](https://github.com/
 - Install requirements:
     - Compiler with ANSI C89 support (GCC, Clang)
     - cmake >= 3.7
-    - libcjson-dev >= 1.7.10
+- Clone
+
+```sh
+git clone https://github.com/PurpleBote/pbotectl.git
+cd pbotectl
+git submodule update --init
+```
+
 - Build:
 
 ```bash

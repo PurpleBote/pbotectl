@@ -55,11 +55,11 @@ function(configure_gettext)
 
     if(NOT GETTEXT_POFILE_DESTINATION)
         set(GETTEXT_POFILE_DESTINATION "${GETTEXT_POTFILE_DESTINATION}/po/")
-        message(STATUS "POFILE_DESTINATION defaulting to POTFILE_DESTINATION/po/")
+        message(STATUS "POFILE_DESTINATION defaulting to ${GETTEXT_POTFILE_DESTINATION}/po/")
     endif()
     if(NOT GETTEXT_GMOFILE_DESTINATION)
         set(GETTEXT_GMOFILE_DESTINATION "${GETTEXT_POFILE_DESTINATION}")
-        message(STATUS "GMOFILE_DESTINATION defaulting to POFILE_DESTINATION")
+        message(STATUS "GMOFILE_DESTINATION defaulting to ${GETTEXT_POFILE_DESTINATION}")
     endif()
 
     # Make input directories absolute in relation to the current directory

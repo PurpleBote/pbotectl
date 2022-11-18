@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "cjson/cJSON.h"
+#include "cJSON.h"
 
 #include "commands.h"
 #include "daemon.h"
@@ -141,7 +141,8 @@ subcmd_daemon_uptime (int argc, const char **argv, const char *prefix)
   hours = (uptime_json->valueint % 86400) / 3600;
   minutes = (uptime_json->valueint / 60) % 60;
   seconds = uptime_json->valueint % 60;
-  printf (_("%d day, %d:%02d:%02d\n"), days, hours, minutes, seconds);
+  printf (P_("%d day, %d:%02d:%02d\n",
+             "%d days, %d:%02d:%02d\n", days), days, hours, minutes, seconds);
 
   return exit_status;
 }
