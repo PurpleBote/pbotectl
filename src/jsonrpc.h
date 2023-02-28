@@ -1,7 +1,6 @@
 /*
- * storage.h: interfaces to storage related commands
+ * jsonrpc.h: code with JSON-RPC stuff
  * Copyright (C) 2022-2023, PurpleBote Team
- * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
  *
@@ -19,18 +18,35 @@
  * along with pbotectl. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PBOTECTL_STORAGE_H
-#define PBOTECTL_STORAGE_H
+#ifndef PBOTECTL_JSONRPC_H
+#define PBOTECTL_JSONRPC_H
 
-#define STORAGE_COMMAND_PREFIX "storage"
+#include "cJSON.h"
 
-#define STORAGE_COMMAND_PARAM_CLEAN "clean"
-#define STORAGE_COMMAND_PARAM_SHOW  "show"
-#define STORAGE_COMMAND_PARAM_USED  "used"
+#define JSON_MALFORMED (-2)
+#define JSON_IS_ERROR (-1)
+#define JSON_OK 0
 
-int subcmd_storage_help (int argc, const char **argv, const char *prefix);
-int subcmd_storage_show (int argc, const char **argv, const char *prefix);
-int subcmd_storage_used (int argc, const char **argv, const char *prefix);
-int subcmd_storage_clean (int argc, const char **argv, const char *prefix);
+enum jvalue_type
+{
+  jtype_string,
+  jtype_int
+};
 
-#endif /* PBOTECTL_STORAGE_H */
+typedef struct jrpc_param
+{
+  int type;
+  char* name;
+  char* svalue;
+  int ivalue;
+} jrpc_param;
+
+char * get_4XX_error (int code);
+
+char * get_error_message (int code);
+
+int check_json_error (char *buffer);
+
+int create_request_str (char *cmd, cJSON *params, char **req);
+
+#endif /* PBOTECTL_JSONRPC_H */

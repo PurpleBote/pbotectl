@@ -1,6 +1,6 @@
 /*
  * util.h: code with usefull functions and constants
- * Copyright (C) 2022, PurpleBote Team
+ * Copyright (C) 2022-2023, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -27,6 +27,7 @@
 #define ARRAY_SIZE(x) (sizeof (x) / sizeof (x[0]))
 
 #define EXIT_SUCCESS 0
+#define EXIT_ERROR 1
 
 #define PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT "PBOTECTL_USE_JSON_OUTPUT"
 /* Connection type */
@@ -44,7 +45,6 @@ int skip_prefix (const char *str, const char *prefix, const char **out);
 
 int file_exists (const char *filename);
 
-static const char     *sizes[]   = { "EiB", "PiB", "TiB", "GiB", "MiB", "KiB", "B" };
 static const uint64_t  exbibytes = 1024ULL * 1024ULL * 1024ULL *
                                    1024ULL * 1024ULL * 1024ULL;
 

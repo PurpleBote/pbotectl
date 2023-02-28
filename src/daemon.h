@@ -1,6 +1,6 @@
 /*
  * daemon.h: interfaces to daemon related commands
- * Copyright (C) 2022, PurpleBote Team
+ * Copyright (C) 2022-2023, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -22,7 +22,7 @@
 #ifndef PBOTECTL_DAEMON_H
 #define PBOTECTL_DAEMON_H
 
-#define DAEMON_COMMAND_PREFIX "daemon."
+#define DAEMON_COMMAND_PREFIX "daemon"
 
 #define DAEMON_COMMAND_PARAM_SHOW   "show"
 #define DAEMON_COMMAND_PARAM_UPTIME "uptime"

@@ -1,6 +1,6 @@
 /*
  * pbotectl.c: CLI utility for Plus Bote Daemon
- * Copyright (C) 2022, PurpleBote Team
+ * Copyright (C) 2022-2023, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -19,6 +19,7 @@
  * along with pbotectl. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,6 +49,19 @@ static struct cmd_struct commands[] = {
   { "peer", cmd_peer },
   { "storage", cmd_storage },
 };
+
+/* Long options.  */
+/*static const struct option long_options[] =
+{
+  { "help", no_argument, NULL, 'h' },
+  { "version", no_argument, NULL, 'v' },
+  { "json", no_argument, NULL, 'j' },
+  { "socket", optional_argument, NULL, 's' },
+  { "tcp", no_argument, NULL, 't' },
+  { "host", required_argument, NULL, 'H' },
+  { "port", required_argument, NULL, 'p' },
+  { NULL, 0, NULL, 0 }
+};*/
 
 const char * const env_var[]
 = {
@@ -100,17 +114,19 @@ handle_options (char ***argv, int *argc, int *envchanged, int *need_help)
 {
   /*const char **orig_argv = *argv;*/
   char **orig_argv = *argv;
+  char *str;
+  const char *cmd;
 
   if (0 == strcmp((*argv)[0], "-h"))
     {
-      char *str = "--help";
+      str = "--help";
       (*argv)[0] = (char *)malloc(strlen(str));
       strcpy((*argv)[0], str);
     }
 
   if (0 == strcmp((*argv)[0], "-v"))
     {
-      char *str = "--version";
+      str = "--version";
       (*argv)[0] = (char *)malloc(strlen(str));
       strcpy((*argv)[0], str);
     }
@@ -121,7 +137,7 @@ handle_options (char ***argv, int *argc, int *envchanged, int *need_help)
   
   while (*argc > 0)
     {
-      const char *cmd = (*argv)[0];
+      cmd = (*argv)[0];
 
       /* If we still get command */
       if (cmd[0] != '-')
@@ -132,13 +148,13 @@ handle_options (char ***argv, int *argc, int *envchanged, int *need_help)
 
       if (0 == strcmp(cmd, "-j") || 0 == strcmp(cmd, "--json"))
         {
-          setenv (PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT, "1", 1);
+          (void) setenv (PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT, "1", 1);
           if (envchanged)
             *envchanged = 1;
         }
       else if (0 == strcmp (cmd, "-s") || 0 == strcmp (cmd, "--socket"))
         {
-          setenv (PBOTECTL_CONNECT_USE_SOCKET, "1", 1);
+          (void) setenv (PBOTECTL_CONNECT_USE_SOCKET, "1", 1);
 
           if (envchanged)
             *envchanged = 1;
@@ -149,15 +165,15 @@ handle_options (char ***argv, int *argc, int *envchanged, int *need_help)
         }
       else if (skip_prefix (cmd, "--socket=", &cmd))
         {
-          setenv (PBOTECTL_CONNECT_USE_SOCKET, "1", 1);
-          setenv (PBOTECTL_SOCKET_PATH_ENVIRONMENT, cmd, 1);
+          (void) setenv (PBOTECTL_CONNECT_USE_SOCKET, "1", 1);
+          (void) setenv (PBOTECTL_SOCKET_PATH_ENVIRONMENT, cmd, 1);
           
           if (envchanged)
             *envchanged = 1;
         }
       else if (0 == strcmp (cmd, "-t") || 0 == strcmp (cmd, "--tcp"))
         {
-          setenv (PBOTECTL_CONNECT_USE_SOCKET, "0", 1);
+          (void) setenv (PBOTECTL_CONNECT_USE_SOCKET, "0", 1);
           
           if (envchanged)
             *envchanged = 1;
@@ -168,23 +184,23 @@ handle_options (char ***argv, int *argc, int *envchanged, int *need_help)
         }
       else if (skip_prefix (cmd, "--host=", &cmd))
         {
-          setenv (PBOTECTL_CONNECT_USE_SOCKET, "0", 1);
-          setenv (PBOTECTL_DAEMON_HOST_ENVIRONMENT, cmd, 1);
+          (void) setenv (PBOTECTL_CONNECT_USE_SOCKET, "0", 1);
+          (void) setenv (PBOTECTL_DAEMON_HOST_ENVIRONMENT, cmd, 1);
           
           if (envchanged)
             *envchanged = 1;
         }
       else if (skip_prefix (cmd, "--port=", &cmd))
         {
-          setenv (PBOTECTL_CONNECT_USE_SOCKET, "0", 1);
-          setenv (PBOTECTL_DAEMON_PORT_ENVIRONMENT, cmd, 1);
+          (void) setenv (PBOTECTL_CONNECT_USE_SOCKET, "0", 1);
+          (void) setenv (PBOTECTL_DAEMON_PORT_ENVIRONMENT, cmd, 1);
           
           if (envchanged)
             *envchanged = 1;
         }
       else
         {
-          fprintf (stderr, _("unknown option: %s\n"), cmd);
+          fprintf (stderr, _("Unknown option: %s\n"), cmd);
           *need_help = 1;
           break;
         }
@@ -192,11 +208,46 @@ handle_options (char ***argv, int *argc, int *envchanged, int *need_help)
       (*argv)++;
       (*argc)--;
     }
+
+  /* Parse command line options.  */
+  /*while ((optchar = getopt_long (argc, argv, "+hvjs::tH:p:", long_options, NULL))
+         != EOF)
+    switch (optchar)
+    {
+    case '\0':*/
+      /* Long option.  */
+      /*break;
+    case 'h':
+      *need_help = 1;
+      break;
+    case 'v':
+      domain = optarg;
+      break;
+    case 'j':
+      do_expand = true;
+      break;
+    case 's':
+      break;
+    case 't':
+      do_help = true;
+      break;
+    case 'H':
+      inhibit_added_newline = true;
+      break;
+    case 'p':
+      do_shell = true;
+      break;
+    case 'V':
+      do_version = true;
+      break;
+    default:
+      *need_help = 1;
+    }*/
   
   return (*argv) - orig_argv;
 }
 
-static void
+static int
 /*handle_command (int argc, const char **argv)*/
 handle_command (int argc, char **argv)
 {
@@ -207,12 +258,12 @@ handle_command (int argc, char **argv)
 
   command = get_command (cmd);
   if (command)
-    exit (run_command (command, argc, argv));
+    return run_command (command, argc, argv);
   else
     {
       printf (_("Unknown command or parameter: %s\n\n"), cmd);
       command = get_command ("help");
-      exit (run_command (command, argc, argv));
+      return run_command (command, argc, argv);
     }
 }
 
@@ -220,7 +271,7 @@ int
 main (int argc, char *argv[])
 {
   const char *cmd;
-  int need_help = 0;
+  int need_help = 0, exit_code, i = 0;
 
   /* For skipping bin name */
   argc--;
@@ -230,7 +281,6 @@ main (int argc, char *argv[])
   printf ("argc:    %d\n", argc);
   if (argc > 0)
     {
-      int i = 0;
       for (i = 0; i < argc; i++)
         {
           printf ("argv[%d]: %s\n", i, argv[i]);
@@ -239,7 +289,7 @@ main (int argc, char *argv[])
 #endif
 
   /* Setup i18n */
-  setlocale (LC_MESSAGES, "");
+  (void) setlocale (LC_MESSAGES, "");
 #ifdef _WIN32
   /* NOOP */
 #else
@@ -247,6 +297,8 @@ main (int argc, char *argv[])
 #endif
   bind_textdomain_codeset(GETTEXT_DOMAIN, "UTF-8");
   textdomain (GETTEXT_DOMAIN);
+
+  /*bool do_version = false;*/
 
   handle_options (&argv, &argc, NULL, &need_help);
 
@@ -261,7 +313,7 @@ main (int argc, char *argv[])
   else
     {
       /* The user didn't specify a command; give them help */
-      fprintf (stderr, _("no command given\n\n"));
+      fprintf (stderr, _("No command given\n\n"));
       argv[0] = "help";
     }
 
@@ -272,7 +324,7 @@ main (int argc, char *argv[])
 #if DEBUG_MODE
   printf ("cmd: %s\n", cmd);
 
-  int i = 0;
+  i = 0;
   while (env_var[i])
     {
       char *value = getenv (env_var[i]);
@@ -284,7 +336,14 @@ main (int argc, char *argv[])
     }
 #endif
 
-  handle_command (argc, argv);
+  exit_code = handle_command (argc, argv);
 
-  return EXIT_SUCCESS;
+  i = 0;
+  while (env_var[i])
+    {
+      (void) unsetenv (env_var[i]);
+      i++;
+    }
+
+  exit (exit_code);
 }

@@ -1,6 +1,6 @@
 /*
  * node.h: interfaces to node related commands
- * Copyright (C) 2022, PurpleBote Team
+ * Copyright (C) 2022-2023, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -22,7 +22,7 @@
 #ifndef PBOTECTL_NODE_H
 #define PBOTECTL_NODE_H
 
-#define NODE_COMMAND_PREFIX "node."
+#define NODE_COMMAND_PREFIX "node"
 
 #define NODE_COMMAND_PARAM_SHOW  "show"
 #define NODE_COMMAND_PARAM_COUNT "count"

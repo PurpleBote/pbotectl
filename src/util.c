@@ -1,6 +1,6 @@
 /*
  * util.c: code with usefull functions and constants
- * Copyright (C) 2022, PurpleBote Team
+ * Copyright (C) 2022-2023, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -49,7 +49,8 @@ file_exists (const char *filename)
 
 char *
 bs2l (uint64_t size)
-{   
+{
+  const char *sizes[] = { "EiB", "PiB", "TiB", "GiB", "MiB", "KiB", "B" };
   char * result = (char *) malloc(sizeof(char) * 20);
   uint64_t multiplier = exbibytes;
   int i;

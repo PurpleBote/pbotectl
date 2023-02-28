@@ -1,6 +1,6 @@
 /*
  * request.c: code to make request to socket
- * Copyright (C) 2022, PurpleBote Team
+ * Copyright (C) 2022-2023, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -69,7 +69,9 @@ set_socket_path (char *socket_path)
 static void
 set_host_addr (char *host, int *port)
 {
-  char *host_env_val = getenv (PBOTECTL_DAEMON_HOST_ENVIRONMENT);
+  char *host_env_val, *port_env_val;
+
+  host_env_val = getenv (PBOTECTL_DAEMON_HOST_ENVIRONMENT);
   if (host_env_val)
     {
 #if DEBUG_MODE
@@ -85,7 +87,7 @@ set_host_addr (char *host, int *port)
       strcpy (host, DEFAULT_HOST);
     }
 
-  char *port_env_val = getenv (PBOTECTL_DAEMON_PORT_ENVIRONMENT);
+  port_env_val = getenv (PBOTECTL_DAEMON_PORT_ENVIRONMENT);
   if (port_env_val)
     {
       sscanf(port_env_val, "%d", port);
@@ -106,6 +108,7 @@ void
 make_request (const char *request, char *buffer)
 {
   /* Socket stuff */
+  char *is_socket;
   char socket_path[PATH_MAX];
   struct sockaddr_un sock_addr;
   /* TCP stuff */
@@ -117,7 +120,7 @@ make_request (const char *request, char *buffer)
   int ret;
 
   /* check what we need to use to connect */
-  char *is_socket = getenv (PBOTECTL_CONNECT_USE_SOCKET);
+  is_socket = getenv (PBOTECTL_CONNECT_USE_SOCKET);
 
   /* If booth socket and host:port not set - try default host and port*/
   if (!is_socket)
@@ -180,12 +183,13 @@ make_request (const char *request, char *buffer)
       return;
     }
 
-  ret = write (data_socket, request, strlen (request));
+  ret = write (data_socket, request, DEFAULT_BUFFER_SIZE);
 
   if (ret == -1)
     {
       printf (_("make_request: Write error to socket: %s\n"),
               strerror (errno));
+      return;
     }
 
   ret = read (data_socket, buffer, DEFAULT_BUFFER_SIZE);
@@ -196,7 +200,7 @@ make_request (const char *request, char *buffer)
       return;
     }
 
-  buffer[DEFAULT_BUFFER_SIZE - 1] = 0;
+  buffer[ret] = 0;
   /*printf (_("make_request: response: %s\n"), buffer);*/
 
   close (data_socket);

@@ -1,6 +1,6 @@
 /*
  * gettext.h: libintl.h wrapper
- * Copyright (C) 2022, PurpleBote Team
+ * Copyright (C) 2022-2023, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -29,8 +29,8 @@
 #include <libintl.h>
 #include <locale.h>
 
-#define _(STRING) gettext(STRING)
+#define _(STRING) gettext (STRING)
 #define N_(STRING) STRING
-#define P_(SINGULAR, PLURAL, N) ngettext(SINGULAR, PLURAL, N)
+#define P_(SINGULAR, PLURAL, N) ngettext (SINGULAR, PLURAL, N)
 
 #endif /* GETTEXT_H */

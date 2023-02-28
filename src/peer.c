@@ -1,6 +1,6 @@
 /*
  * peer.c: code to handle peer related commands
- * Copyright (C) 2022, PurpleBote Team
+ * Copyright (C) 2022-2023, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -22,10 +22,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "cJSON.h"
-
 #include "commands.h"
 #include "gettext.h"
+#include "jsonrpc.h"
 #include "peer.h"
 
 static struct subcmd_struct peer_subcommands[] = {
@@ -42,8 +41,12 @@ subcmd_peer_help (int argc, const char **argv, const char *prefix)
 {
   int exit_status = 0;
 
-  /* ToDo: */
-  printf (_("peer help\n"));
+  printf (_("Avaliable commands:\n"));
+  printf (_("  help      Show this message\n"));
+  printf (_("  show      List peers\n"));
+  printf (_("  count     Show total and good\n"));
+  printf (_("  stats     Show detailed info\n"));
+  printf ("\n");
 
   return exit_status;
 }
@@ -51,14 +54,76 @@ subcmd_peer_help (int argc, const char **argv, const char *prefix)
 int
 subcmd_peer_show (int argc, const char **argv, const char *prefix)
 {
-  /*char buffer[DEFAULT_BUFFER_SIZE];*/
+  char *buffer = (char *) malloc (DEFAULT_BUFFER_SIZE);
   int exit_status = 0;
+  char *req, *is_json;
+  cJSON *params, *param_subcmd, *o_json, *result_json, *peers_json, *count_json, *total_json, *good_json;
 
-  char cmd_str[] = PEER_COMMAND_PREFIX;
-  strcat (cmd_str, PEER_COMMAND_PARAM_SHOW); /* ToDo */
+  params = cJSON_CreateObject();
+  param_subcmd = cJSON_CreateString(PEER_COMMAND_PARAM_SHOW);
+  cJSON_AddItemToObject(params, "subcommand", param_subcmd);
+  
+  (void) create_request_str(PEER_COMMAND_PREFIX, params, &req);
+#if DEBUG_MODE
+  printf (_("Formated request: %s\n"), req);
+  fflush(stdout);
+#endif
 
-  /* ToDo: */
-  printf (_("peer show\n"));
+  make_request (req, buffer);
+  free (req);
+
+  if (!*buffer)
+    {
+      printf (_("Empty response from server\n"));
+      exit_status = 1;
+      free (buffer);
+      return exit_status;
+    }
+
+  exit_status = check_json_error (buffer);
+  if (exit_status == JSON_IS_ERROR) /* If we got error in response */
+    {
+      free (buffer);
+      return exit_status;
+    }
+  else if (exit_status == JSON_MALFORMED)
+    {
+      printf (_("Malformed response\n"));
+      return exit_status;
+    }
+
+  o_json = cJSON_Parse (buffer);
+
+  is_json = getenv (PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT);
+  if (is_json)
+    {
+      printf ("%s\n", cJSON_Print (o_json));
+      free (buffer);
+      cJSON_Delete (o_json);
+      return exit_status;
+    }
+
+  result_json = cJSON_GetObjectItemCaseSensitive (o_json, "result");
+  peers_json = cJSON_GetObjectItemCaseSensitive (result_json, "peers");
+  count_json = cJSON_GetObjectItemCaseSensitive (peers_json, "count");
+  total_json = cJSON_GetObjectItemCaseSensitive (count_json, "total");
+  good_json = cJSON_GetObjectItemCaseSensitive (count_json, "good");
+
+  if (!cJSON_IsNumber (total_json) || !cJSON_IsNumber (good_json))
+    {
+      printf (_("Malformed response\n"));
+      exit_status = 1;
+      free (buffer);
+      cJSON_Delete (o_json);
+      return exit_status;
+    }
+
+  printf (_("Peers:\n"));
+  printf (_("\tTotal:\t%d\n"), total_json->valueint);
+  printf (_("\tGood:\t%d\n"), good_json->valueint);
+
+  free (buffer);
+  cJSON_Delete (o_json);
 
   return exit_status;
 }
@@ -66,43 +131,77 @@ subcmd_peer_show (int argc, const char **argv, const char *prefix)
 int
 subcmd_peer_count (int argc, const char **argv, const char *prefix)
 {
-  char buffer[DEFAULT_BUFFER_SIZE];
+  char *buffer = (char *) malloc (DEFAULT_BUFFER_SIZE);
   int exit_status = 0;
+  char *req, *is_json;
+  cJSON *params, *param_subcmd, *o_json, *result_json, *peers_json, *count_json, *total_json, *good_json;
 
-  char cmd_str[] = PEER_COMMAND_PREFIX;
-  strcat (cmd_str, PEER_COMMAND_PARAM_COUNT);
+  params = cJSON_CreateObject();
+  param_subcmd = cJSON_CreateString(PEER_COMMAND_PARAM_COUNT);
+  cJSON_AddItemToObject(params, "subcommand", param_subcmd);
 
-  make_request (cmd_str, buffer);
+  (void) create_request_str(PEER_COMMAND_PREFIX, params, &req);
+#if DEBUG_MODE
+  printf (_("Formated request: %s\n"), req);
+  fflush(stdout);
+#endif
+
+  make_request (req, buffer);
+  free (req);
 
   if (!*buffer)
     {
       printf (_("Empty response from server\n"));
       exit_status = 1;
+      free (buffer);
+      return exit_status;
     }
 
-  cJSON *o_json = cJSON_Parse(buffer);
+  exit_status = check_json_error (buffer);
+  if (exit_status == JSON_IS_ERROR) /* If we got error in response */
+    {
+      free (buffer);
+      return exit_status;
+    }
+  else if (exit_status == JSON_MALFORMED)
+    {
+      printf (_("Malformed response\n"));
+      return exit_status;
+    }
 
-  char * is_json = getenv (PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT);
+  o_json = cJSON_Parse (buffer);
+  printf ("%s\n", buffer);
+
+  is_json = getenv (PBOTECTL_USE_JSON_OUTPUT_ENVIRONMENT);
   if (is_json)
     {
-      printf ("%s\n", cJSON_Print(o_json));
+      printf ("%s\n", cJSON_Print (o_json));
+      free (buffer);
+      cJSON_Delete (o_json);
       return exit_status;
     }
 
-  cJSON *result_json = cJSON_GetObjectItemCaseSensitive(o_json, "result");
-  cJSON *peers_json = cJSON_GetObjectItemCaseSensitive(result_json, "peers");
-  cJSON *count_json = cJSON_GetObjectItemCaseSensitive(peers_json, "count");
-  cJSON *total_json = cJSON_GetObjectItemCaseSensitive(count_json, "total");
-  cJSON *good_json = cJSON_GetObjectItemCaseSensitive(count_json, "good");
+  result_json = cJSON_GetObjectItemCaseSensitive (o_json, "result");
+  peers_json = cJSON_GetObjectItemCaseSensitive (result_json, "peers");
+  count_json = cJSON_GetObjectItemCaseSensitive (peers_json, "count");
+  total_json = cJSON_GetObjectItemCaseSensitive (count_json, "total");
+  good_json = cJSON_GetObjectItemCaseSensitive (count_json, "good");
 
-  if (!cJSON_IsNumber(total_json) || !cJSON_IsNumber(good_json))
+  if (!cJSON_IsNumber (total_json) || !cJSON_IsNumber (good_json))
     {
+      printf (_("Malformed response\n"));
       exit_status = 1;
+      free (buffer);
+      cJSON_Delete (o_json);
       return exit_status;
     }
 
-  printf (_("Total:\t%d\n"), total_json->valueint);
-  printf (_("Good:\t%d\n"), good_json->valueint);
+  printf (_("Peers:\n"));
+  printf (_("\tTotal:\t%d\n"), total_json->valueint);
+  printf (_("\tGood:\t%d\n"), good_json->valueint);
+
+  free (buffer);
+  cJSON_Delete (o_json);
 
   return exit_status;
 }
@@ -110,19 +209,44 @@ subcmd_peer_count (int argc, const char **argv, const char *prefix)
 int
 subcmd_peer_stats (int argc, const char **argv, const char *prefix)
 {
-  char buffer[DEFAULT_BUFFER_SIZE];
+  char *buffer = (char *) malloc (DEFAULT_BUFFER_SIZE);
   int exit_status = 0;
+  char *req;
+  cJSON *params, *param_subcmd;
 
-  char cmd_str[] = PEER_COMMAND_PREFIX;
-  strcat (cmd_str, PEER_COMMAND_PARAM_STATS);
+  params = cJSON_CreateObject();
+  param_subcmd = cJSON_CreateString(PEER_COMMAND_PARAM_STATS);
+  cJSON_AddItemToObject(params, "subcommand", param_subcmd);
+  
+  (void) create_request_str(PEER_COMMAND_PREFIX, params, &req);
+#if DEBUG_MODE
+  printf (_("Formated request: %s\n"), req);
+  fflush(stdout);
+#endif
 
-  make_request (cmd_str, buffer);
+  make_request (req, buffer);
 
   if (!*buffer)
     {
       printf (_("Empty response from server\n"));
       exit_status = 1;
+      free (buffer);
+      return exit_status;
     }
+
+  exit_status = check_json_error (buffer);
+  if (exit_status == JSON_IS_ERROR) /* If we got error in response */
+    {
+      free (buffer);
+      return exit_status;
+    }
+  else if (exit_status == JSON_MALFORMED)
+    {
+      printf (_("Malformed response\n"));
+      return exit_status;
+    }
+
+  free (buffer);
 
   return exit_status;
 }

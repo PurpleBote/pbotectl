@@ -1,6 +1,6 @@
 /*
  * show.h: interfaces to show related commands
- * Copyright (C) 2022, PurpleBote Team
+ * Copyright (C) 2022-2023, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -22,12 +22,12 @@
 #ifndef PBOTECTL_SHOW_H
 #define PBOTECTL_SHOW_H
 
-#define SHOW_COMMAND_PREFIX_ALL      "all."
-#define SHOW_COMMAND_PREFIX_DAEMON   "daemon."
-#define SHOW_COMMAND_PREFIX_IDENTITY "identity."
-#define SHOW_COMMAND_PREFIX_NODE     "node."
-#define SHOW_COMMAND_PREFIX_PEER     "peer."
-#define SHOW_COMMAND_PREFIX_STORAGE  "storage."
+#define SHOW_COMMAND_PREFIX_ALL      "all"
+#define SHOW_COMMAND_PREFIX_DAEMON   "daemon"
+#define SHOW_COMMAND_PREFIX_IDENTITY "identity"
+#define SHOW_COMMAND_PREFIX_NODE     "node"
+#define SHOW_COMMAND_PREFIX_PEER     "peer"
+#define SHOW_COMMAND_PREFIX_STORAGE  "storage"
 #define SHOW_COMMAND_POSTFIX         "show"
 
 int subcmd_show_help (int argc, const char **argv, const char *prefix);

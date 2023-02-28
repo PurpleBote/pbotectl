@@ -4,10 +4,12 @@ Source: https://github.com/polistern
 
 Files: *
 Copyright: (c) 2019-2022 polistern <polistern@i2pmail.org>
+Copyright: (c) 2022-2023, PurpleBote Team
 License: GPL-3.0
 
 License: GPL-3.0
  Copyright (c) 2019-2022, polistern <polistern@i2pmail.org>
+ Copyright (c) 2022-2023, PurpleBote Team
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -21,3 +23,6 @@ License: GPL-3.0
 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+ On Debian systems, the complete text of the GNU General Public License
+ version 3 can be found in "/usr/share/common-licenses/GPL-3".

@@ -1,6 +1,6 @@
 /*
  * peer.h: interfaces to peer related commands
- * Copyright (C) 2022, PurpleBote Team
+ * Copyright (C) 2022-2023, PurpleBote Team
  * Copyright (C) 2019-2022, polistern
  * 
  * This file is part of pbotectl.
@@ -22,7 +22,7 @@
 #ifndef PBOTECTL_PEER_H
 #define PBOTECTL_PEER_H
 
-#define PEER_COMMAND_PREFIX "peer."
+#define PEER_COMMAND_PREFIX "peer"
 
 #define PEER_COMMAND_PARAM_SHOW  "show"
 #define PEER_COMMAND_PARAM_COUNT "count"

@@ -1,67 +1,86 @@
 # Russian translations for pbotectl package.
 # Copyright (C) 2022 THE pbotectl'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pbotectl package.
-# polistern <polistern@i2pmail.org>, 2022.
+# polistern <polistern@i2pmail.org>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pbotectl 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-18 10:00+0000\n"
-"PO-Revision-Date: 2022-11-18 10:00+0000\n"
+"PO-Revision-Date: 2023-02-28 10:00+0000\n"
 "Last-Translator: polistern <polistern@i2pmail.org>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/commands.c:73
-#: /home/polistern/it/i2p/pbotectl/build/../src/pbotectl.c:213
+#: ../src/commands.c:73 ../src/pbotectl.c:264
 #, c-format
 msgid ""
 "Unknown command or parameter: %s\n"
 "\n"
 msgstr ""
+"Неизвестная команда или параметр: %s\n"
+"\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/daemon.c:45
+#: ../src/daemon.c:44
 #, c-format
 msgid "daemon help\n"
-msgstr ""
+msgstr "помощь по демону\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/daemon.c:63
-#: /home/polistern/it/i2p/pbotectl/build/../src/daemon.c:116
-#: /home/polistern/it/i2p/pbotectl/build/../src/identity.c:76
-#: /home/polistern/it/i2p/pbotectl/build/../src/node.c:74
-#: /home/polistern/it/i2p/pbotectl/build/../src/peer.c:79
-#: /home/polistern/it/i2p/pbotectl/build/../src/peer.c:123
-#: /home/polistern/it/i2p/pbotectl/build/../src/show.c:74
-#: /home/polistern/it/i2p/pbotectl/build/../src/storage.c:62
-#: /home/polistern/it/i2p/pbotectl/build/../src/storage.c:103
+#: ../src/daemon.c:63 ../src/daemon.c:141 ../src/identity.c:66
+#: ../src/identity.c:146 ../src/node.c:64 ../src/node.c:141 ../src/peer.c:68
+#: ../src/peer.c:145 ../src/peer.c:223 ../src/show.c:74 ../src/storage.c:66
+#: ../src/storage.c:135
+#, c-format
+msgid "Formated request: %s\n"
+msgstr "Форматированный запрос: %s\n"
+
+#: ../src/daemon.c:72 ../src/daemon.c:150 ../src/identity.c:75
+#: ../src/identity.c:155 ../src/node.c:73 ../src/node.c:150 ../src/peer.c:77
+#: ../src/peer.c:154 ../src/peer.c:231 ../src/show.c:83 ../src/storage.c:75
+#: ../src/storage.c:144
 #, c-format
 msgid "Empty response from server\n"
-msgstr ""
+msgstr "Пустой ответ от сервера\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/daemon.c:96
+#: ../src/daemon.c:86 ../src/daemon.c:164 ../src/identity.c:89
+#: ../src/identity.c:169 ../src/node.c:87 ../src/node.c:110 ../src/node.c:164
+#: ../src/peer.c:91 ../src/peer.c:114 ../src/peer.c:168 ../src/peer.c:192
+#: ../src/peer.c:245 ../src/show.c:97 ../src/storage.c:89 ../src/storage.c:158
 #, c-format
+msgid "Malformed response\n"
+msgstr "Повреждённый ответ\n"
+
+#: ../src/daemon.c:119
+#, fuzzy, c-format
+msgid "Daemon:\n"
+msgstr "Демон:\n"
+
+#: ../src/daemon.c:120
+#, fuzzy, c-format
 msgid ""
-"Uptime:\t%d day, %d:%02d:%02d\n"
+"\tUptime:\t%d day, %d:%02d:%02d\n"
 "\n"
 msgstr ""
+"Время работы:\t%d дня, %d:%02d:%02d\n"
+"\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/daemon.c:97
-#, c-format
-msgid "Recv:\t%s\n"
-msgstr ""
+#: ../src/daemon.c:121
+#, fuzzy, c-format
+msgid "\tRecv:\t%s\n"
+msgstr "\tПолучено:\t%s\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/daemon.c:98
-#, c-format
-msgid "Sent:\t%s\n"
-msgstr ""
+#: ../src/daemon.c:122
+#, fuzzy, c-format
+msgid "\tSent:\t%s\n"
+msgstr "\tОтправлено:\t%s\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/daemon.c:144
+#: ../src/daemon.c:193
 #, c-format
 msgid "%d day, %d:%02d:%02d\n"
 msgid_plural "%d days, %d:%02d:%02d\n"
@@ -69,126 +88,385 @@ msgstr[0] "%d день, %d:%02d:%02d\n"
 msgstr[1] "%d дня, %d:%02d:%02d\n"
 msgstr[2] "%d дней, %d:%02d:%02d\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/identity.c:46
+#: ../src/help.c:34
 #, c-format
-msgid "identity help\n"
-msgstr ""
+msgid "Usage: pbotectl [OPTION...] COMMAND [COMMAND OPTION...]"
+msgstr "Использование: pbotectl [OPTION...] COMMAND [COMMAND OPTION...]"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/identity.c:58
+#: ../src/help.c:40
 #, c-format
-msgid "identity show\n"
-msgstr ""
+msgid "General options:\n"
+msgstr "Общие параметры:\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/identity.c:99
-#, c-format
-msgid "Identities:\t%d\n"
-msgstr ""
-
-#: /home/polistern/it/i2p/pbotectl/build/../src/node.c:45
-#, c-format
-msgid "node help\n"
-msgstr ""
-
-#: /home/polistern/it/i2p/pbotectl/build/../src/node.c:56
-#, c-format
-msgid "node show\n"
-msgstr ""
-
-#: /home/polistern/it/i2p/pbotectl/build/../src/node.c:99
-#, c-format
-msgid "Total:\t\t%d\n"
-msgstr ""
-
-#: /home/polistern/it/i2p/pbotectl/build/../src/node.c:100
-#, c-format
-msgid "Unlocked:\t%d\n"
-msgstr ""
-
-#: /home/polistern/it/i2p/pbotectl/build/../src/node.c:111
-#, c-format
-msgid "node stats\n"
-msgstr ""
-
-#: /home/polistern/it/i2p/pbotectl/build/../src/pbotectl.c:187
-#, c-format
-msgid "unknown option: %s\n"
-msgstr ""
-
-#: /home/polistern/it/i2p/pbotectl/build/../src/pbotectl.c:264
+#: ../src/help.c:41
 #, c-format
 msgid ""
-"no command given\n"
+"    -h, --help          Show help information about pbotectl (this message)\n"
+msgstr ""
+"    -h, --help          Показать справочную информацию (это сообщение)\n"
+
+#: ../src/help.c:43
+#, c-format
+msgid "    -v, --version       Show information about pbotectl version\n"
+msgstr "    -v, --version       Показать информацию о версии pbotectl\n"
+
+#: ../src/help.c:45
+#, c-format
+msgid "Connect options:\n"
+msgstr "Параметры подключения:\n"
+
+#: ../src/help.c:46
+#, c-format
+msgid "    -s, --socket        Flag to force use socket with defaults\n"
+msgstr ""
+"    -s, --socket        Принудительно подключаться через сокет с данными по "
+"умолчанию\n"
+
+#: ../src/help.c:48
+#, c-format
+msgid "        --socket=PATH   Set custom path to socket\n"
+msgstr "        --socket=PATH   Подключаться через сокет по указанному пути\n"
+
+#: ../src/help.c:50
+#, c-format
+msgid "  OR\n"
+msgstr "  ИЛИ\n"
+
+#: ../src/help.c:51
+#, c-format
+msgid "    -t, --tcp           Flag to force use TCP with defaults\n"
+msgstr ""
+"    -t, --tcp           Принудительно подключаться через TCP с данными по "
+"умолчанию\n"
+
+#: ../src/help.c:53
+#, c-format
+msgid "        --host=ADDRESS  Set pboted address\n"
+msgstr "        --host=ADDRESS  Адрес pboted для подключения\n"
+
+#: ../src/help.c:55
+#, c-format
+msgid "        --port=PORT     Set pboted control port\n"
+msgstr "        --port=PORT     Порт pboted для подключения\n"
+
+#: ../src/help.c:57
+#, c-format
+msgid "Formatting options:\n"
+msgstr "Параметры форматирования:\n"
+
+#: ../src/help.c:58
+#, c-format
+msgid "    -j, --json          Enables output formatting to JSON\n"
+msgstr "    -j, --json          Отображать ответ в формате JSON\n"
+
+#: ../src/help.c:61 ../src/peer.c:44 ../src/storage.c:42
+#, c-format
+msgid "Avaliable commands:\n"
+msgstr "Доступные команды:\n"
+
+#: ../src/help.c:62
+#, c-format
+msgid "Basic information\n"
+msgstr "Базовая информация\n"
+
+#: ../src/help.c:63
+#, c-format
+msgid ""
+"    help                Show help information about pbotectl (this message)\n"
+msgstr ""
+"    help                Показать справочную информацию (это сообщение)\n"
+
+#: ../src/help.c:65
+#, c-format
+msgid "    version             Show information about pbotectl version\n"
+msgstr "    version             Показать информацию о версии pbotectl\n"
+
+#: ../src/help.c:67
+#, c-format
+msgid "                        or can be a part of other commands\n"
+msgstr "                        или может быть частью других комманд\n"
+
+#: ../src/help.c:70
+#, c-format
+msgid "Examine daemon state (can be a part of other commands)\n"
+msgstr "Исследовать состояние демона (могут быть часть других команд)\n"
+
+#: ../src/help.c:71
+#, c-format
+msgid "    show                Show various types of objects\n"
+msgstr "    show                Отобразить данные по объектам\n"
+
+#: ../src/help.c:73
+#, c-format
+msgid "    status              Show the status of various tasks\n"
+msgstr "    status              Отобразить состояние задач\n"
+
+#: ../src/help.c:87
+#, c-format
+msgid "Work with daemon\n"
+msgstr "Взаимодействие с демоном\n"
+
+#: ../src/help.c:88
+#, c-format
+msgid ""
+"    daemon              Show runtime variables (e.g. uptime, transferred "
+"data size)\n"
+msgstr ""
+"    daemon              Отобразить данные выполнения (e.g. время работы, "
+"переданные данные)\n"
+
+#: ../src/help.c:90
+#, c-format
+msgid ""
+"    identity            Show, create, modify, remove, update Bote "
+"identities\n"
+msgstr ""
+"    identity            Отображение, создание, изменение Bote идентичностей\n"
+
+#: ../src/help.c:92
+#, c-format
+msgid "    storage             Show DHT storage usage and update limit\n"
+msgstr ""
+"    storage             Отображение данных по использованию DHT, очистка, "
+"установка лимита\n"
+
+#: ../src/help.c:94
+#, c-format
+msgid "    node                List, add, remove, update DHT nodes\n"
+msgstr "    node                Отобразить, добавить, удалить DHT узлы\n"
+
+#: ../src/help.c:96
+#, c-format
+msgid "    peer                List, add, remove, update relay peers\n"
+msgstr "    peer                Отобразить, добавить, удалить реле\n"
+
+#: ../src/help.c:99
+#, c-format
+msgid "Report bugs to <%s>\n"
+msgstr "Сообщайте об ошибках <%s>\n"
+
+#: ../src/identity.c:45
+#, c-format
+msgid "identity help\n"
+msgstr "помощь по идентичностям\n"
+
+#: ../src/identity.c:106 ../src/identity.c:194
+#, fuzzy, c-format
+msgid "Identities:\n"
+msgstr "Идентичности:\n"
+
+#: ../src/identity.c:121
+#, fuzzy, c-format
+msgid "\tName:\t%s\n"
+msgstr "\tИмя:\t%s\n"
+
+#: ../src/identity.c:122
+#, c-format
+msgid "\tMail:\tb64.%s\n"
+msgstr "\tПочта:\tb64.%s\n"
+
+#: ../src/identity.c:123
+#, fuzzy, c-format
+msgid "\tHash:\t%s\n"
+msgstr "\tХеш:\t%s\n"
+
+#: ../src/identity.c:125
+#, fuzzy, c-format
+msgid ""
+"\tType:\t%s\n"
 "\n"
 msgstr ""
+"\tТип:\t%s\n"
+"\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/peer.c:46
+#: ../src/identity.c:195
+#, fuzzy, c-format
+msgid "\tCount:\t%d\n"
+msgstr "\tВсего:\t%d\n"
+
+#: ../src/jsonrpc.c:33
+msgid "Not found"
+msgstr "Не найдено"
+
+#: ../src/jsonrpc.c:35 ../src/jsonrpc.c:48
+msgid "Unknown error code"
+msgstr "Неизвестный код ошибки"
+
+#: ../src/jsonrpc.c:69
 #, c-format
-msgid "peer help\n"
+msgid "Error before: %s\n"
 msgstr ""
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/peer.c:61
+#: ../src/jsonrpc.c:82
 #, c-format
-msgid "peer show\n"
-msgstr ""
+msgid "Error, code: %3d, message: %s\n"
+msgstr "Ошибка, код: %3d, сообщение: %s\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/peer.c:104
+#: ../src/node.c:45
 #, c-format
-msgid "Total:\t%d\n"
-msgstr ""
+msgid "node help\n"
+msgstr "помощь по узлам\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/peer.c:105
+#: ../src/node.c:117 ../src/node.c:191
 #, c-format
-msgid "Good:\t%d\n"
-msgstr ""
+msgid "Nodes:\n"
+msgstr "Узлы:\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/request.c:138
+#: ../src/node.c:118 ../src/node.c:192
+#, fuzzy, c-format
+msgid "\tTotal:\t\t%d\n"
+msgstr "\tВсего:\t\t%d\n"
+
+#: ../src/node.c:119 ../src/node.c:193
+#, fuzzy, c-format
+msgid "\tUnlocked:\t%d\n"
+msgstr "\tРазблокировано:\t%d\n"
+
+#: ../src/node.c:205
+#, c-format
+msgid "node stats\n"
+msgstr "данные по узлам\n"
+
+#: ../src/pbotectl.c:203
+#, c-format
+msgid "Unknown option: %s\n"
+msgstr "Неизвестный параметр: %s\n"
+
+#: ../src/pbotectl.c:316
+#, fuzzy, c-format
+msgid ""
+"No command given\n"
+"\n"
+msgstr ""
+"Не передана команда\n"
+"\n"
+
+#: ../src/peer.c:45 ../src/storage.c:43
+#, c-format
+msgid "  help      Show this message\n"
+msgstr "  help      Отобразить это сообщение\n"
+
+#: ../src/peer.c:46
+#, c-format
+msgid "  show      List peers\n"
+msgstr "  show      Список пиров\n"
+
+#: ../src/peer.c:47
+#, c-format
+msgid "  count     Show total and good\n"
+msgstr "  count     Показать всего и хорошие\n"
+
+#: ../src/peer.c:48
+#, c-format
+msgid "  stats     Show detailed info\n"
+msgstr "  stats     Отобразить подробную информацию\n"
+
+#: ../src/peer.c:121 ../src/peer.c:199
+#, c-format
+msgid "Peers:\n"
+msgstr "Пиры:\n"
+
+#: ../src/peer.c:122 ../src/peer.c:200
+#, fuzzy, c-format
+msgid "\tTotal:\t%d\n"
+msgstr "\tВсего:\t%d\n"
+
+#: ../src/peer.c:123 ../src/peer.c:201
+#, fuzzy, c-format
+msgid "\tGood:\t%d\n"
+msgstr "\tХорошие:\t%d\n"
+
+#: ../src/request.c:141
 #, c-format
 msgid "make_request: Socket file not exists: %s\n"
-msgstr ""
+msgstr "make_request: Файл сокета не существует: %s\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/request.c:145
-#: /home/polistern/it/i2p/pbotectl/build/../src/request.c:163
+#: ../src/request.c:148 ../src/request.c:166
 #, c-format
 msgid "make_request: Socket create error: %s\n"
-msgstr ""
+msgstr "make_request: Ошибка при создании сокета: %s\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/request.c:178
+#: ../src/request.c:181
 #, c-format
 msgid "make_request: Socket connect error: %s\n"
-msgstr ""
+msgstr "make_request: Ошибка подключения к сокету: %s\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/request.c:187
+#: ../src/request.c:190
 #, c-format
 msgid "make_request: Write error to socket: %s\n"
-msgstr ""
+msgstr "make_request: Ошибка записи в сокет: %s\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/request.c:194
+#: ../src/request.c:198
 #, c-format
 msgid "make_request: Read error from socket: %s\n"
-msgstr ""
+msgstr "make_request: Ошибка чтения из сокета: %s\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/show.c:53
+#: ../src/show.c:52
 #, c-format
 msgid "show help\n"
-msgstr ""
+msgstr "отображение помощи\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/storage.c:44
+#: ../src/storage.c:44
 #, c-format
-msgid "storage help\n"
-msgstr ""
+msgid "  show      Info about storage\n"
+msgstr "  show      Информация о хранилище\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/storage.c:85
-#: /home/polistern/it/i2p/pbotectl/build/../src/storage.c:126
+#: ../src/storage.c:45
+#, fuzzy, c-format
+msgid "  used      Show storage usage info\n"
+msgstr ""
+"    storage             Отображение данных по использованию DHT, очистка, "
+"установка лимита\n"
+
+#: ../src/storage.c:46
 #, c-format
-msgid "Used:\t%f\n"
-msgstr ""
+msgid "  clean     Trigger storage cleanup\n"
+msgstr "  clean     Запустить очистку хранилища\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/storage.c:137
-#, c-format
-msgid "storage clean\n"
-msgstr ""
+#: ../src/storage.c:114 ../src/storage.c:183
+#, fuzzy, c-format
+msgid "Storage:\n"
+msgstr "Хранилище\n"
 
-#: /home/polistern/it/i2p/pbotectl/build/../src/util.c:75
+#: ../src/storage.c:115 ../src/storage.c:184
+#, fuzzy, c-format
+msgid "\tUsed:\t%f\n"
+msgstr "\tЗанято:\t%f\n"
+
+#: ../src/storage.c:196
+#, fuzzy, c-format
+msgid "Storage cleanup started\n"
+msgstr "Очистка хранилища запущена\n"
+
+#: ../src/util.c:76
 #, c-format
 msgid "%s, version %s\n"
-msgstr ""
+msgstr "%s, версия %s\n"
+
+#, fuzzy, c-format
+#~ msgid "\tAddress:\t%s\n"
+#~ msgstr "\tАдрес:\t%s\n"
+
+#, c-format
+#~ msgid "node show\n"
+#~ msgstr "отобразить узлы\n"
+
+#, c-format
+#~ msgid "Identities:\t%d\n"
+#~ msgstr "Идентичности:\t%d\n"
+
+#, c-format
+#~ msgid "identity show\n"
+#~ msgstr "отображение идентичностей\n"
+
+#, c-format
+#~ msgid "peer help\n"
+#~ msgstr "помощь по реле\n"
+
+#, c-format
+#~ msgid "Can't parse response\n"
+#~ msgstr "Не могу разобрать ответ\n"
+
+#, c-format
+#~ msgid "peer show\n"
+#~ msgstr "отображение реле\n"

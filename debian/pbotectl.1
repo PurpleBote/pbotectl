@@ -1,0 +1,74 @@
+.TH "PBOTECTL" "1" "February 28, 2023"
+
+.SH "NAME"
+pbotectl \- Purple Bote Control Tool.
+.SH "SYNOPSIS"
+.B pbotectl
+[\fIOPTION1\fR] [\fIOPTION2\fR]...
+.SH "DESCRIPTION"
+pbotectl (Purple Bote Control Tool) - is a CLI for pboted.
+Interaction between pbotectl and pboted occurs via JSON-RPC 2.0 protocol.
+.PP
+Any of the configuration options below can be used in the \fBDAEMON_ARGS\fR variable in \fI/etc/default/pbotectl\fR.
+.SH "OPTIONS"
+.TP
+\fB\-\-help\fR
+Show available options.
+.TP
+\fB\-\-conf=\fR
+Config file (default: \fI~/.pbotectl/pbotectl.conf\fR or \fI/var/lib/pbotectl/pbotectl.conf\fR)
+.BR
+This parameter will be silently ignored if the specified config file does not exist.
+Options specified on the command line take precedence over those in the config file.
+.TP
+\fB\-\-pidfile=\fR
+Where to write pidfile (don\'t write by default)
+.TP
+\fB\-\-daemon\fR
+Router will go to background after start (\fIdisabled\fR by default)
+.TP
+\fB\-\-service\fR
+Router will use system folders like \fI/var/lib/pbotectl\fR (\fIdisabled\fR by default)
+.TP
+\fB\-\-log=\fR
+Logs destination: \fIstdout\fR, \fIfile\fR, \fIsyslog\fR (\fIstdout\fR if not set, \fIfile\fR - otherwise, for compatibility)
+.TP
+\fB\-\-logfile=\fR
+Path to logfile (default - autodetect)
+.TP
+\fB\-\-loglevel=\fR
+Log messages above this level (\fIdebug\fR, \fBinfo\fR, \fIwarn\fR, \fIerror\fR, \fInone\fR)
+.TP
+\fB\-\-logclftime\fR
+Log messages with full CLF-formatted date and time (\fIdisabled\fR by default)
+.TP
+\fB\-\-host=\fR
+External IP for listen (\fI0.0.0.0\fR by default)
+.TP
+\fB\-\-port=\fR
+UDP port for listen (\fI5050\fR by default)
+.TP
+\fB\-\-storage=\fR
+Limit for local storage usage (\fI50 MB\fR by default)
+.PP
+See service-specific parameters in example config file \fI/usr/share/doc/pbotectl/pbotectl.conf.gz\fR
+.SH "FILES"
+/etc/pbotectl/pbotectl.conf, /etc/default/pbotectl
+.RS 4
+pbotectl configuration files (when running as a system service)
+.RE
+.PP
+/var/lib/pbotectl/
+.RS 4
+pbotectl profile directory (when running as a system service, see \fB\-\-service\fR above)
+.RE
+.PP
+$HOME/.pbotectl/
+.RS 4
+pbotectl profile directory (when running as a normal user)
+.SH "AUTHOR"
+This manual page was written by polistern <\m[blue]\fBpolistern@i2pmail\&.org\fR\m[]> for the Debian system (but may be used by others).
+.SH "SEE ALSO"
+Documentation at Read the Docs: \m[blue]\fBhttps://pbotectl\&.readthedocs\&.io/en/latest/\fR\m[]
+.PP
+On Debian systems, the complete text of the GPL-3 license can be found in \fI/usr/share/common-licenses/GPL-3\fR
