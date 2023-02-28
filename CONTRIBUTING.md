@@ -4,7 +4,7 @@ I'm really glad you're reading this.
 
 ## Submitting changes
 
-Please send a [GitHub Pull Request to pbotectl](https://github.com/polistern/pbotectl/pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)).
+Please send a [GitHub Pull Request to pbotectl](https://github.com/PurpleBote/pbotectl/pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)).
 
 Please follow [style convention](#style-conventions) and make sure all of your commits are atomic (one feature per commit).
 

@@ -3,7 +3,8 @@
 
 # pbotectl
 
-pbotectl (Purple Bote Control Tool) - is a CLI utility for [pboted](https://github.com/PurpleBote/pboted)
+**pbotectl** (Purple Bote Control Tool) - is a CLI for [pboted](https://github.com/PurpleBote/pboted).  
+Interaction between **pbotectl** and **pboted** occurs via [JSON-RPC 2.0](https://www.jsonrpc.org/specification) protocol.
 
 ## Features
 
@@ -11,10 +12,12 @@ pbotectl (Purple Bote Control Tool) - is a CLI utility for [pboted](https://gith
 
 ### Planned Features
 
-- Bote identity creation
-- Aliases controling
-- Launching periodic tasks
-- Metrics and statuses
+- authorization/encrypt/decrypt
+- emails management
+- bote identity management
+- aliases management
+- launching periodic tasks
+- metrics and statuses
 
 ## Resources
 
@@ -29,6 +32,17 @@ You can fetch precompiled packages and binaries on [release](https://github.com/
 - GNU/Linux - [![Build](https://github.com/PurpleBote/pbotectl/actions/workflows/build.yml/badge.svg)](https://github.com/PurpleBote/pbotectl/actions/workflows/build.yml)
   - Debian / Ubuntu - [![Build DEB](https://github.com/PurpleBote/pbotectl/actions/workflows/build-deb.yml/badge.svg)](https://github.com/PurpleBote/pbotectl/actions/workflows/build-deb.yml)
 
+#### Support expected
+
+- GNU/Linux
+  - Arch Linux
+  - OpenWrt
+  - CentOS / Fedora
+- UNIX-like
+  - FreeBSD
+  - macOS
+- Microsoft Windows
+
 ## Building
 
 - Install requirements:
@@ -39,12 +53,11 @@ You can fetch precompiled packages and binaries on [release](https://github.com/
 ```sh
 git clone https://github.com/PurpleBote/pbotectl.git
 cd pbotectl
-git submodule update --init
 ```
 
 - Build:
 
-```bash
+```sh
 cd build
 cmake .
 make
